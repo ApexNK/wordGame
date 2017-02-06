@@ -1,0 +1,25 @@
+.row-wrap {
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+  }
+  .col-33-rem {
+    position: relative;
+    -moz-flex: 0 0 5.333333rem;
+    -ms-flex: 0 0 5.333333rem;
+    flex: 0 0 5.333333rem;
+    max-width: 5.333333rem;
+    height: 5.333333rem;
+    padding: 10px;
+    @include box-sizing();
+    .col-container{
+      position: absolute;
+      left:10px;
+      right:10px;
+      top:10px;
+      bottom:10px;
+      background: red;
+      color: #fff;
+      text-align: center;
+      line-height: 5rem;
+    }
+  }

@@ -1,0 +1,48 @@
+@import './reset.scss';
+@import './mixin.scss';
+@import './var.scss';
+// @import './components/index.scss';
+.ofh{
+  overflow: hidden
+}
+.fl {
+  float: left
+}
+.fr{
+  float: right;
+}
+.blk{
+  display: block;
+}
+.circle{
+  border-radius: 50%;
+}
+.padding{
+  padding: $basePadding
+}
+.text-right{
+  text-align: right;
+}
+.text-center{
+  text-align: center;
+}
+.cf{
+  clear: both;
+}
+.margin-bottom-far{
+  margin-bottom: $farMargin;
+}
+.margin-bottom-close{
+  margin-bottom: $closeMargin;
+}
+
+
+.card {
+  @extend .blk;
+  @extend .padding;
+  @extend .ofh;
+  @include setShadow();
+  @include box-sizing;
+  font-size: $baseFontSize;
+}
+
