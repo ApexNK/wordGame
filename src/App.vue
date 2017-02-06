@@ -1,12 +1,13 @@
 <template>
   <div>
-    <transition
+    <!--<transition
     name="custom-classes-transition"
     enter-active-class="animated flipInY"
     leave-active-class="animated flipOutY"
     >
-      <router-view class="child-view"></router-view>
-    </transition>
+     
+    </transition>-->
+     <router-view class="child-view"></router-view>
     
   </div>
 </template>

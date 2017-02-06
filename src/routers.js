@@ -2,8 +2,13 @@ import Home from 'VIEWS/home.vue';
 import Stage from 'VIEWS/Stage.vue'
 const routes = [
   {
-    path: '/stage/:level',
-    name: 'stage',
+    path: '/normalModel/:level',
+    name: 'normalModel',
+    component: Stage
+  },
+  {
+    path: '/strangeModel/:level',
+    name: 'strangeModel',
     component: Stage
   },
   {
