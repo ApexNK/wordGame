@@ -29,7 +29,6 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'VIEWS':  path.resolve(__dirname, '../src/view'),
       'STYLE': path.resolve(__dirname, '../src/style'),
-      'PLUGINS': path.resolve(__dirname, '../src/plugins'),
       'STATIC': path.resolve(__dirname, '../static')
     }
   },

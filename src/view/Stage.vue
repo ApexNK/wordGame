@@ -151,7 +151,5 @@
   .hidden {
     opacity: 0;
   }
-  .chosen {
-    background: green;
-  }
+  
 </style>

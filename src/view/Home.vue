@@ -39,6 +39,9 @@
       },
       data: function () {
         return {
+          val: 1,
+          step: 2,
+          scale: [0, 90, 200],
           sliderValue: 1
         }
       },
