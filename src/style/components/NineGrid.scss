@@ -10,16 +10,28 @@
     max-width: 5.333333rem;
     height: 5.333333rem;
     padding: 10px;
+    // border:1px double rgba(25, 255, 255, .25);
     @include box-sizing();
+    &.chosen {
+      // border:1px solid rgba(255,153,18, .25);
+      .col-container{
+        border:3px double rgba(255,153,18, 1);
+        background: rgba(255,153,18, 0.75);
+        // box-shadow: 0 0 2px rgba(193, 34, 255, 0.75) inset;
+        color:#6d4c21;
+      }
+    }
     .col-container{
       position: absolute;
       left:10px;
       right:10px;
       top:10px;
       bottom:10px;
-      background: red;
-      color: #fff;
+      background: rgba(25, 255, 255, 0.75);
+      border:3px double rgba(25, 255, 255, 1);;
+      //box-shadow: 0 0 2px rgba(58, 74, 255, 0.75) inset;
+      color: #1d5f5f;
       text-align: center;
-      line-height: 5rem;
+      // line-height: 5rem;
     }
   }
