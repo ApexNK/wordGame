@@ -5,11 +5,13 @@ import App from './App'
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import routes from './routers.js';
+import httpPlg from 'PLUGINS/http.js';
+import evBus from 'PLUGINS/evBus.js';
 
 /* eslint-disable no-new */
 
 // 初始化依赖
-[VueResource, VueRouter].map((plugin) => {
+[VueResource, VueRouter, httpPlg, evBus].map((plugin) => {
   Vue.use(plugin);
 });
 const router = new VueRouter({

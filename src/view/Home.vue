@@ -39,9 +39,6 @@
       },
       data: function () {
         return {
-          val: 1,
-          step: 2,
-          scale: [0,90,200],
           sliderValue: 1
         }
       },
@@ -65,7 +62,7 @@
   @import '~STYLE/components/NineGrid.scss';
   .slider { 
   /* overwrite slider styles */
-  min-width: 250px;
+    width: 80%;
   }
   .model {
     float: left;
