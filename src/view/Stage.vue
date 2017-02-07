@@ -2,6 +2,7 @@
     <div>
         <header-bar></header-bar>
         <div class="container has-header">
+          <timer></timer>
           <div>
             第{{$route.params.level}}关 错误{{errCount}}
           </div>
@@ -19,6 +20,8 @@
 
 <script>
     import HeaderBar from 'components/Header.vue';
+    import Timer from 'components/Timer.vue';
+
     export default {
       data () {
         return {
@@ -65,10 +68,14 @@
         };
       },
       components: {
-        'HeaderBar': HeaderBar
+        'HeaderBar': HeaderBar,
+        Timer
       },
       mounted () {
         this.cardList = this.createCardList(this.wordList);
+        // this.globalEvBus.$on('gametimeout', function () {
+        // }.bind(this));
+        this.globalEvBus.$emit('startTimer');
       },
       methods: {
         createCardList (list) {
