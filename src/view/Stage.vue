@@ -7,7 +7,7 @@
             <div
               :disabled="card.isHidden"
               @click="cardClick(card.id, index)"
-              :class="{'rotateOut': card.isHidden, 'chosen': card.isChosen}"
+              :class="{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}"
               class="col-33-rem animated" v-for="(card, index) in cardList">
               <div class="col-container">{{card.keyword}}</div>
             </div>
@@ -31,6 +31,8 @@
 <script>
     import HeaderBar from 'components/Header.vue';
     import Timer from 'components/Timer.vue';
+
+    let prevSelected = null;
 
     export default {
       data () {
@@ -86,8 +88,9 @@
       },
       mounted () {
         this.cardList = this.createCardList(this.wordList);
-        // this.globalEvBus.$on('gametimeout', function () {
-        // }.bind(this));
+        this.globalEvBus.$on('gametimeout', function () {
+          this.gameOver();
+        }.bind(this));
         this.readyGo();
       },
       methods: {
@@ -99,7 +102,8 @@
                 id: item.id,
                 keyword: item.en,
                 isHidden: false,
-                isChosen: false
+                isChosen: false,
+                isError: false
               }
             );
             cardList.push(
@@ -107,7 +111,8 @@
                 id: item.id,
                 keyword: item.ch,
                 isHidden: false,
-                isChosen: false
+                isChosen: false,
+                isError: false
               }
             );
           });
@@ -117,29 +122,61 @@
           return cardList;
         },
         cardClick (id, index) {
-          if (this.cardList[index].isHidden) {
+          let item = this.cardList[index];
+          if (item.isHidden) {
             return;
           }
-          if (this.choseId === -1) {
-            this.choseId = id;
-            this.setChosen(index);
+
+          if (!prevSelected) {
+            item.isChosen = true;
+            prevSelected = {
+              key: index,
+              value: item
+            };
             return;
           }
-          if (this.chosens.indexOf(index) >= 0) {
+
+          if (prevSelected.key === index) {
+            item.isChosen = false;
+            prevSelected = null;
             return;
           }
-          if (id === this.choseId) {
-            this.setChosen(index);
-            this.setHidden(this.chosens);
-            this.chosens.length = 0;
+
+          if (id === prevSelected.value.id) {
+            item.isHidden = true;
+            prevSelected.value.isHidden = true;
+            prevSelected = null;
             return;
           }
-          this.chosens[0] = index;
-          this.choseId = id;
-          this.cardList.forEach((item, idx) => {
-            item.isChosen = idx === index;
-          });
-          this.errCount++;
+
+          item.isError = true;
+          prevSelected.value.isError = true;
+          setTimeout(function () {
+            item.isError = false;
+            prevSelected.value.isError = false;
+            prevSelected.value.isChosen = false;
+            prevSelected = null;
+          }, 400);
+          // if (this.choseId === -1) {
+          //   this.choseId = id;
+          //   this.setChosen(index);
+          //   return;
+          // }
+          // if (this.chosens.indexOf(index) >= 0) {
+          //   return;
+          // }
+          // if (id === this.choseId) {
+          //   this.setChosen(index);
+          //   this.setHidden(this.chosens);
+          //   this.chosens.length = 0;
+          //   return;
+          // }
+          // this.chosens[0] = index;
+          // this.choseId = id;
+          // this.cardList.forEach((item, idx) => {
+          //   item.isChosen = idx === index;
+          // });
+          // this.errCount++;
         },
         setChosen (index) {
           this.cardList[index].isChosen = true;
@@ -165,6 +202,8 @@
               this.time--;
             }
           }.bind(this), 1000);
+        },
+        gameOver () {
         }
       }
     }

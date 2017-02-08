@@ -9,16 +9,48 @@
     flex: 0 0 5.333333rem;
     max-width: 5.333333rem;
     height: 5.333333rem;
-    padding: 10px;
-    // border:1px double rgba(25, 255, 255, .25);
+    padding: 1px;
     @include box-sizing();
-    &.chosen {
-      // border:1px solid rgba(255,153,18, .25);
+    &.type1st {
       .col-container{
-        border:3px double rgba(255,153,18, 1);
-        background: rgba(255,153,18, 0.75);
+        background: rgba(25, 255, 255, 0.35);
+        border:3px double rgba(25, 255, 255, 0.75);
+        color: #19ffff;
+      }
+    }
+    &.type2nd {
+      .col-container{
+        background: rgba(255, 25, 119, 0.35);
+        border:3px double rgba(255, 25, 119, 0.75);
+        color: #FF1977;
+      }
+    }
+    &.type3rd {
+      .col-container{
+        background: rgba(59, 228, 66, 0.35);
+        border:3px double rgba(59, 228, 66, 0.75);
+        //box-shadow: 0 0 2px rgba(58, 74, 255, 0.75) inset;
+        color: #3BE442;
+      }
+    }
+    &.type4th {
+      .col-container{
+        border:3px double rgba(255,153,18, 0.75);
+        background: rgba(255,153,18, 0.35);
         // box-shadow: 0 0 2px rgba(193, 34, 255, 0.75) inset;
-        color:#6d4c21;
+        color:#ff9912;
+      }
+    }    
+    &.chosen {
+      .col-container{
+        border:4px double rgba(58,10,245, 1);
+        color: #3A0AF5;
+      }
+    }
+    &.errchosen {
+      .col-container{
+        border:4px double rgba(255,1,1, 1);
+        color: #ff0101;
       }
     }
     .col-container{
@@ -27,11 +59,10 @@
       right:10px;
       top:10px;
       bottom:10px;
-      background: rgba(25, 255, 255, 0.75);
-      border:3px double rgba(25, 255, 255, 1);;
-      //box-shadow: 0 0 2px rgba(58, 74, 255, 0.75) inset;
-      color: #1d5f5f;
       text-align: center;
+      background: rgba(220, 164, 187, 0.35);
+      border:3px double rgba(220, 164, 187, 0.75);
+      color: #DCA4BB;
       // line-height: 5rem;
     }
   }
