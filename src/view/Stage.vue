@@ -1,11 +1,8 @@
 <template>
     <div>
-        <header-bar></header-bar>
-        <div class="container has-header">
+      <header-bar></header-bar>
+        <div class="container has-header" v-show="startGame">
           <timer></timer>
-          <div>
-            第{{$route.params.level}}关 错误{{errCount}}
-          </div>
           <div class="row row-wrap no-padding">
             <div
               :disabled="card.isHidden"
@@ -15,7 +12,20 @@
               <div class="col-container">{{card.keyword}}</div>
             </div>
         </div>
-    </div>
+      </div>
+      <div class="container has-header" v-show="!startGame">
+          <div style="width:80%; border: 1px sienna solid; height: 300px; margin: 50px auto; position: relative;" class="text-center">
+              <div class="title">
+                  {{modelName}}
+              </div>
+              <div>
+                游戏马上开始，准备好了吗？
+              </div>
+              <div class="timezone">
+                  <span class="time">{{time}}</span>
+              </div>
+          </div>
+      </div>
 </template>
 
 <script>
@@ -25,6 +35,9 @@
     export default {
       data () {
         return {
+          startGame: false,
+          time: 3,
+          modelName: '普通模式',
           wordList: [
             {
               id: 0,
@@ -75,7 +88,7 @@
         this.cardList = this.createCardList(this.wordList);
         // this.globalEvBus.$on('gametimeout', function () {
         // }.bind(this));
-        this.globalEvBus.$emit('startTimer');
+        this.readyGo();
       },
       methods: {
         createCardList (list) {
@@ -141,6 +154,17 @@
           if (this.correctCount === this.wordList.length) {
             window.alert('过关!');
           }
+        },
+        readyGo () {
+          let clock = setInterval(function () {
+            if (this.time === 0) {
+              clearInterval(clock);
+              this.startGame = true;
+              this.globalEvBus.$emit('startTimer');
+            } else {
+              this.time--;
+            }
+          }.bind(this), 1000);
         }
       }
     }
@@ -148,8 +172,29 @@
 <style lang="scss" scoped>
   @import '~STYLE/mixin.scss';
   @import '~STYLE/components/NineGrid.scss';
+  @import '~STYLE/common.scss';
   .hidden {
     opacity: 0;
   }
-  
+  .title {
+    font-size: 1.4em;
+    margin: 20px auto;
+  }
+  .timezone {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+  }
+  .time {
+    font-size: 70px;
+    font-weight: 400;
+    color: #2f2f2f;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 </style>
