@@ -7,7 +7,7 @@
             <div
               :disabled="card.isHidden"
               @click="cardClick(card.id, index)"
-              :class="{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}"
+              :class="[card.styleType, {'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}]"
               class="col-33-rem animated" v-for="(card, index) in cardList">
               <div class="col-container">{{card.keyword}}</div>
             </div>
@@ -33,6 +33,88 @@
     import Timer from 'components/Timer.vue';
 
     let prevSelected = null;
+    let listData = [
+      {
+        'name': 'aberrant',
+        'sequence': 0
+      },
+      {
+        'name': 'abrasive',
+        'sequence': 1
+      },
+      {
+        'name': 'accolade',
+        'sequence': 2
+      },
+      {
+        'name': 'acrimonious',
+        'sequence': 3
+      },
+      {
+        'name': 'address',
+        'sequence': 4
+      },
+      {
+        'name': 'aesthetic',
+        'sequence': 5
+      },
+      {
+        'name': 'aggressor',
+        'sequence': 6
+      },
+      {
+        'name': 'alienate',
+        'sequence': 7
+      },
+      {
+        'name': 'amorphous',
+        'sequence': 8
+      },
+      {
+        'name': 'ample',
+        'sequence': 9
+      },
+      {
+        'name': '侵略者，攻击者',
+        'sequence': 6
+      },
+      {
+        'name': '充足的',
+        'sequence': 9
+      },
+      {
+        'name': '发表演说；处理',
+        'sequence': 4
+      },
+      {
+        'name': '尖刻的',
+        'sequence': 3
+      },
+      {
+        'name': '异常的，脱轨的',
+        'sequence': 0
+      },
+      {
+        'name': '无组织的，不定形的',
+        'sequence': 8
+      },
+      {
+        'name': '离间，使孤立',
+        'sequence': 7
+      },
+      {
+        'name': '粗糙的，磨损的',
+        'sequence': 1
+      },
+      {
+        'name': '艺术的，审美的',
+        'sequence': 5
+      },
+      {
+        'name': '荣誉',
+        'sequence': 2
+      }
+    ];
 
     export default {
       data () {
@@ -40,44 +122,8 @@
           startGame: false,
           time: 3,
           modelName: '普通模式',
-          wordList: [
-            {
-              id: 0,
-              en: 'halo',
-              ch: '你好'
-            },
-            {
-              id: 1,
-              en: 'good morning',
-              ch: '早上好'
-            },
-            {
-              id: 2,
-              en: 'name',
-              ch: '名字'
-            },
-            {
-              id: 3,
-              en: 'football',
-              ch: '足球'
-            },
-            {
-              id: 4,
-              en: 'basketball',
-              ch: '篮球'
-            },
-            {
-              id: 5,
-              en: 'park',
-              ch: '公园'
-            }
-          ],
+          wordList: listData,
           cardList: [],
-          errCount: 0,
-          choseId: -1,
-          correctCount: 0,
-          clicks: 0,
-          chosens: [],
           startTime: new Date().getTime(),
           wastedTime: 0
         };
@@ -87,13 +133,29 @@
         Timer
       },
       mounted () {
-        this.cardList = this.createCardList(this.wordList);
+        // this.cardList = this.createCardList(this.wordList);
+        this.initListData();
         this.globalEvBus.$on('gametimeout', function () {
           this.gameOver();
         }.bind(this));
         this.readyGo();
       },
       methods: {
+        initListData () {
+          let self = this;
+          this.wordList.forEach(item => {
+            self.cardList.push(
+              {
+                id: item.sequence,
+                keyword: item.name,
+                isHidden: false,
+                isChosen: false,
+                isError: false,
+                styleType: 'type1st'
+              }
+            );
+          });
+        },
         createCardList (list) {
           let cardList = [];
           list.forEach(item => {
@@ -103,7 +165,8 @@
                 keyword: item.en,
                 isHidden: false,
                 isChosen: false,
-                isError: false
+                // isError: false,
+                styleType: 'type1st'
               }
             );
             cardList.push(
@@ -112,7 +175,8 @@
                 keyword: item.ch,
                 isHidden: false,
                 isChosen: false,
-                isError: false
+                // isError: false,
+                styleType: 'type2nd'
               }
             );
           });
@@ -157,40 +221,7 @@
             prevSelected.value.isChosen = false;
             prevSelected = null;
           }, 400);
-          // if (this.choseId === -1) {
-          //   this.choseId = id;
-          //   this.setChosen(index);
-          //   return;
-          // }
-          // if (this.chosens.indexOf(index) >= 0) {
-          //   return;
-          // }
-          // if (id === this.choseId) {
-          //   this.setChosen(index);
-          //   this.setHidden(this.chosens);
-          //   this.chosens.length = 0;
-          //   return;
-          // }
-          // this.chosens[0] = index;
-          // this.choseId = id;
-          // this.cardList.forEach((item, idx) => {
-          //   item.isChosen = idx === index;
-          // });
-          // this.errCount++;
-        },
-        setChosen (index) {
-          this.cardList[index].isChosen = true;
-          this.chosens.push(index);
-        },
-        setHidden (chosens) {
-          chosens.forEach(item => {
-            this.cardList[item].isHidden = true;
-          });
-          this.choseId = -1;
-          this.correctCount ++;
-          if (this.correctCount === this.wordList.length) {
-            window.alert('过关!');
-          }
+          this.$forceUpdate();
         },
         readyGo () {
           let clock = setInterval(function () {
