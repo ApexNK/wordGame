@@ -7,7 +7,7 @@
             <div
               :disabled="card.isHidden"
               @click="cardClick(card.id, index)"
-              :class="[card.styleType, {'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}]"
+              :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-33-rem animated" v-for="(card, index) in cardList">
               <div class="col-container">{{card.keyword}}</div>
             </div>
@@ -54,34 +54,34 @@
         'name': 'address',
         'sequence': 4
       },
-      {
-        'name': 'aesthetic',
-        'sequence': 5
-      },
-      {
-        'name': 'aggressor',
-        'sequence': 6
-      },
-      {
-        'name': 'alienate',
-        'sequence': 7
-      },
-      {
-        'name': 'amorphous',
-        'sequence': 8
-      },
-      {
-        'name': 'ample',
-        'sequence': 9
-      },
-      {
-        'name': '侵略者，攻击者',
-        'sequence': 6
-      },
-      {
-        'name': '充足的',
-        'sequence': 9
-      },
+      // {
+      //   'name': 'aesthetic',
+      //   'sequence': 5
+      // },
+      // {
+      //   'name': 'aggressor',
+      //   'sequence': 6
+      // },
+      // {
+      //   'name': 'alienate',
+      //   'sequence': 7
+      // },
+      // {
+      //   'name': 'amorphous',
+      //   'sequence': 8
+      // },
+      // {
+      //   'name': 'ample',
+      //   'sequence': 9
+      // },
+      // {
+      //   'name': '侵略者，攻击者',
+      //   'sequence': 6
+      // },
+      // {
+      //   'name': '充足的',
+      //   'sequence': 9
+      // },
       {
         'name': '发表演说；处理',
         'sequence': 4
@@ -94,22 +94,22 @@
         'name': '异常的，脱轨的',
         'sequence': 0
       },
-      {
-        'name': '无组织的，不定形的',
-        'sequence': 8
-      },
-      {
-        'name': '离间，使孤立',
-        'sequence': 7
-      },
+      // {
+      //   'name': '无组织的，不定形的',
+      //   'sequence': 8
+      // },
+      // {
+      //   'name': '离间，使孤立',
+      //   'sequence': 7
+      // },
       {
         'name': '粗糙的，磨损的',
         'sequence': 1
       },
-      {
-        'name': '艺术的，审美的',
-        'sequence': 5
-      },
+      // {
+      //   'name': '艺术的，审美的',
+      //   'sequence': 5
+      // },
       {
         'name': '荣誉',
         'sequence': 2
@@ -143,17 +143,29 @@
       methods: {
         initListData () {
           let self = this;
-          this.wordList.forEach(item => {
-            self.cardList.push(
-              {
-                id: item.sequence,
-                keyword: item.name,
-                isHidden: false,
-                isChosen: false,
-                isError: false,
-                styleType: 'type1st'
-              }
-            );
+          let isNormal = (this.$route.name === 'normalModel');
+          let types = ['type1st', 'type2nd', 'type3rd', 'type4th', 'type5th'];
+          let allTypes = [];
+          if (!isNormal) {
+            for (let i = 0; i < 2; i++) {
+              allTypes = allTypes.concat(types);
+            }
+            allTypes.sort((o1, o2) => {
+              return Math.floor(Math.random() * 10) > 5 ? 1 : -1;
+            });
+          }
+          this.wordList.forEach((item, index) => {
+            let card = {
+              id: item.sequence,
+              keyword: item.name,
+              isHidden: false,
+              isChosen: false,
+              isError: false
+            };
+            if (!isNormal) {
+              card.styleType = allTypes[index];
+            }
+            self.cardList.push(card);
           });
         },
         createCardList (list) {

@@ -40,7 +40,14 @@
         // box-shadow: 0 0 2px rgba(193, 34, 255, 0.75) inset;
         color:#ff9912;
       }
-    }    
+    }
+    &.type5th {
+      .col-container{
+        border:3px double rgba(220, 164, 187, 0.75);
+        background: rgba(220, 164, 187, 0.35);
+        color: #DCA4BB;
+      }
+    }  
     &.chosen {
       .col-container{
         border:4px double rgba(58,10,245, 1);

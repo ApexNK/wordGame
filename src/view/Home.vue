@@ -7,7 +7,7 @@
           </div>
           
           <div style="margin: 20px auto; width: 100%; text-align: center">
-              <Ranger> </Ranger>
+              <!--<Ranger> </Ranger>-->
               <range-slider  class="slider" min="1" max="80" step="1" v-model="sliderValue"></range-slider>
           </div>
           <div style="margin: 20px auto; width: 300px; text-align: center">
@@ -57,7 +57,7 @@
           let level = this.sliderValue;
           this.$router.push({name: 'normalModel', params: {level}});
         },
-        gostrangeModel () {
+        goStrageModel () {
           let level = this.sliderValue;
           this.$router.push({name: 'strangeModel', params: {level}});
         }
