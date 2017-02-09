@@ -31,87 +31,108 @@
 <script>
     import HeaderBar from 'components/Header.vue';
     import Timer from 'components/Timer.vue';
+    import dataServer from 'PLUGINS/dataServer.js';
 
     let prevSelected = null;
     let listData = [
       {
         'name': 'aberrant',
+        'lang': 'en',
         'sequence': 0
       },
       {
         'name': 'abrasive',
+        'lang': 'en',
         'sequence': 1
       },
       {
         'name': 'accolade',
+        'lang': 'en',
         'sequence': 2
       },
       {
         'name': 'acrimonious',
+        'lang': 'en',
         'sequence': 3
       },
       {
         'name': 'address',
+        'lang': 'en',
         'sequence': 4
       },
       // {
       //   'name': 'aesthetic',
+      //   'lang': 'en',
       //   'sequence': 5
       // },
       // {
       //   'name': 'aggressor',
+      //   'lang': 'en',
       //   'sequence': 6
       // },
       // {
       //   'name': 'alienate',
+      //   'lang': 'en',
       //   'sequence': 7
       // },
       // {
       //   'name': 'amorphous',
+      //   'lang': 'en',
       //   'sequence': 8
       // },
       // {
       //   'name': 'ample',
+      //   'lang': 'en',
       //   'sequence': 9
       // },
       // {
       //   'name': '侵略者，攻击者',
+      //   'lang': 'zh',
       //   'sequence': 6
       // },
       // {
       //   'name': '充足的',
+      //   'lang': 'zh',
       //   'sequence': 9
       // },
       {
         'name': '发表演说；处理',
+        'lang': 'zh',
         'sequence': 4
       },
       {
         'name': '尖刻的',
+        'lang': 'zh',
         'sequence': 3
       },
       {
         'name': '异常的，脱轨的',
+        'lang': 'zh',
         'sequence': 0
       },
       // {
       //   'name': '无组织的，不定形的',
+      //   'lang': 'zh',
       //   'sequence': 8
       // },
       // {
       //   'name': '离间，使孤立',
+      //   'lang': 'zh',
       //   'sequence': 7
       // },
       {
         'name': '粗糙的，磨损的',
+        'lang': 'zh',
         'sequence': 1
       },
       // {
       //   'name': '艺术的，审美的',
+      //   'lang': 'zh',
       //   'sequence': 5
       // },
       {
         'name': '荣誉',
+        'lang': 'zh',
         'sequence': 2
       }
     ];
@@ -133,8 +154,8 @@
         Timer
       },
       mounted () {
-        // this.cardList = this.createCardList(this.wordList);
         this.initListData();
+        dataServer.setWordList(this.wordList);
         this.globalEvBus.$on('gametimeout', function () {
           this.gameOver();
         }.bind(this));
@@ -168,35 +189,6 @@
             self.cardList.push(card);
           });
         },
-        createCardList (list) {
-          let cardList = [];
-          list.forEach(item => {
-            cardList.push(
-              {
-                id: item.id,
-                keyword: item.en,
-                isHidden: false,
-                isChosen: false,
-                // isError: false,
-                styleType: 'type1st'
-              }
-            );
-            cardList.push(
-              {
-                id: item.id,
-                keyword: item.ch,
-                isHidden: false,
-                isChosen: false,
-                // isError: false,
-                styleType: 'type2nd'
-              }
-            );
-          });
-          cardList.sort((o1, o2) => {
-            return Math.floor(Math.random() * 10) > 5 ? 1 : -1;
-          });
-          return cardList;
-        },
         cardClick (id, index) {
           let item = this.cardList[index];
           if (item.isHidden) {
@@ -227,6 +219,7 @@
 
           item.isError = true;
           prevSelected.value.isError = true;
+          dataServer.setErrorId(id);
           setTimeout(function () {
             item.isError = false;
             prevSelected.value.isError = false;
@@ -247,6 +240,7 @@
           }.bind(this), 1000);
         },
         gameOver () {
+          console.info('game over');
         }
       }
     }
