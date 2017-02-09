@@ -5,7 +5,9 @@
           <div style="margin: 20px auto; width: 300px; text-align: center">
               APEX 800
           </div>
+          
           <div style="margin: 20px auto; width: 100%; text-align: center">
+              <Ranger> </Ranger>
               <range-slider  class="slider" min="1" max="80" step="1" v-model="sliderValue"></range-slider>
           </div>
           <div style="margin: 20px auto; width: 300px; text-align: center">
@@ -29,13 +31,15 @@
 
 <script>
     import HeaderBar from 'components/Header.vue';
+    import Ranger from 'components/Ranger.vue';
     import RangeSlider from 'vue-range-slider';
     import 'vue-range-slider/dist/vue-range-slider.css';
 
     export default {
       components: {
         'HeaderBar': HeaderBar,
-        'RangeSlider': RangeSlider
+        'RangeSlider': RangeSlider,
+        Ranger
       },
       data: function () {
         return {
