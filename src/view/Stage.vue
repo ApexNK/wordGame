@@ -2,14 +2,16 @@
     <div>
       <header-bar></header-bar>
         <div class="container has-header" v-show="startGame">
-          <timer></timer>
+          <div>
+            <span class="larger-time">{{gameTime | digitalClock}}</span>
+          </div>
           <div class="row row-wrap no-padding">
             <div
               :disabled="card.isHidden"
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-33-rem animated" v-for="(card, index) in cardList">
-              <div class="col-container">{{card.keyword}}</div>
+              <div class="col-container">{{card.keyword}}-{{card.id}}</div>
             </div>
         </div>
       </div>
@@ -30,10 +32,12 @@
 
 <script>
     import HeaderBar from 'components/Header.vue';
-    import Timer from 'components/Timer.vue';
     import dataServer from 'PLUGINS/dataServer.js';
 
     let prevSelected = null;
+    const defaultSeconds = 30;
+    let correctNum = 0;
+    const totalPairs = 5;
     let listData = [
       {
         'name': 'aberrant',
@@ -142,6 +146,7 @@
         return {
           startGame: false,
           time: 3,
+          gameTime: defaultSeconds,
           modelName: '普通模式',
           wordList: listData,
           cardList: [],
@@ -150,8 +155,7 @@
         };
       },
       components: {
-        'HeaderBar': HeaderBar,
-        Timer
+        'HeaderBar': HeaderBar
       },
       mounted () {
         this.initListData();
@@ -215,12 +219,19 @@
             item.isHidden = true;
             prevSelected.value.isHidden = true;
             prevSelected = null;
+            correctNum++;
+            if (correctNum === totalPairs) {
+              debugger;
+              this.gameTime = 0;
+              this.goToSuccessPage();
+            }
             return;
           }
 
           item.isError = true;
           prevSelected.value.isError = true;
           dataServer.setErrorId(id);
+          dataServer.setErrorId(prevSelected.value.id);
           setTimeout(function () {
             item.isError = false;
             prevSelected.value.isError = false;
@@ -235,6 +246,7 @@
               clearInterval(clock);
               this.startGame = true;
               this.globalEvBus.$emit('startTimer');
+              this.startTimer();
             } else {
               this.time--;
             }
@@ -242,7 +254,32 @@
         },
         gameOver () {
           console.info('game over');
-          this.$router.replace({name: 'finish', params: {level:this.$route.params.level,modelname:this.$route.name}});
+          this.goToFailPage();
+        },
+        startTimer () {
+          var self = this;
+          minusTime();
+          function minusTime () {
+            setTimeout(function () {
+              console.info(self.gameTime);
+              if (self.gameTime <= 0) {
+                self.gameOver();
+              } else {
+                self.gameTime--;
+                minusTime();
+              }
+            }, 1000);
+          }
+        },
+        goToSuccessPage () {
+          let name = this.isNormal ? 'normalModel' : 'strangeModel';
+          console.info(name);
+          this.$router.replace({name: 'finish', params: {level: this.$route.params.level, modelname: name, state: 1}});
+        },
+        goToFailPage () {
+          let name = this.isNormal ? 'normalModel' : 'strangeModel';
+          console.info(name);
+          this.$router.replace({name: 'finish', params: {level: this.$route.params.level, modelname: name, state: 0}});
         }
       }
     }
@@ -270,6 +307,14 @@
   .time {
     font-size: 70px;
     font-weight: 400;
+    color: #2f2f2f;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .larger-time {
+    font-size: 45px;
+    font-weight: 700;
     color: #2f2f2f;
     display: block;
     width: 100%;

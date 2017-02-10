@@ -7,10 +7,15 @@
           </div>
           
           <div style="margin: 20px auto; width: 100%; text-align: center">
-              恭喜你，挑战通过！  
+            {{title}}
           </div>
-          <div style="margin: 20px auto; width: 300px; text-align: center">
-              本次游戏中，答错的单词有：
+          <div style="margin: 20px auto; width: 300px; text-align: center;">
+              本次游戏中，共答错{{ErrorList.length}}单词
+              <ul v-if="ErrorList.length > 0" style="margin: 20px 10px; list-style-type:none" >
+                <li v-for="word in ErrorList">
+                  {{word.enName}} : {{word.zhName}}
+                </li>
+              </ul>
           </div>
           <div class="row row-wrap no-padding">
             <div class="model">
@@ -30,6 +35,7 @@
 
 <script>
     import HeaderBar from 'components/Header.vue';
+    import dataServer from 'PLUGINS/dataServer.js';
 
     export default {
       components: {
@@ -37,21 +43,30 @@
       },
       data: function () {
         return {
-          ErrorList: []
+          ErrorList: [],
+          title: ''
         }
       },
       mounted () {
         console.log('finished');
+        if (this.$route.params.state === 1) {
+          this.title = ' 恭喜你，挑战通过';
+          debugger;
+        } else {
+          this.title = ' 非常遗憾，挑战失败';
+          debugger;
+        }
+        this.ErrorList = dataServer.getErrorList();
       },
       methods: {
         tryAgain () {
           let level = this.$route.params.level;
           let pagename = this.$route.params.modelname;
-          this.$router.push({name: pagename, params: {level}});
+          debugger;
+          this.$router.replace({name: pagename, params: {level}});
         },
         goHomePage () {
-          let level = this.sliderValue;
-          this.$router.push({name: 'home'});
+          this.$router.replace({name: 'home'});
         }
       }
     }

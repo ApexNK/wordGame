@@ -4,16 +4,10 @@
     </div>
 </template>
 <script>
-    let clock = null;
-    const defaultSeconds = 30;
-
+    const defaultSeconds = 10;
+    var isTiming = false;
+    
     export default {
-    //   props: {
-    //     title: {
-    //       type: String,
-    //       default: '单词连连看'
-    //     }
-    //   },
       data () {
         return {
           time: defaultSeconds
@@ -21,6 +15,8 @@
       },
       created () {
         this.globalEvBus.$on('startTimer', function () {
+          this.time = defaultSeconds;
+          debugger;
           this.start();
         }.bind(this));
       },
@@ -28,28 +24,40 @@
 
       },
       destroyed () {
-        if (clock) {
-          clearInterval(clock);
-        }
+        console.info('destroyed');
+        debugger;
       },
       methods: {
         start: function () {
-          clock = setInterval(() => {
-            if (this.time === 0) {
-              this.pause();
-            } else {
-              this.time--;
-            }
-          }, 1000);
-        },
-        pause: function () {
-          clearInterval(clock);
-          clock = null;
-          this.globalEvBus.$emit('gametimeout');
-        },
-        reset: function () {
-          this.pause();
-          this.time = defaultSeconds;
+          if (isTiming) {
+            debugger;
+            return;
+          }
+          isTiming = true;
+          // let clock = setInterval(function () {
+          //   console.info(this.time);
+          //   if (this.time === 0) {
+          //     isTiming = false;
+          //     window.clearInterval(clock);
+          //     this.globalEvBus.$emit('gametimeout');
+          //   } else {
+          //     this.time--;
+          //   }
+          // }.bind(this), 1000);
+          var self = this;
+          minusTime();
+          function minusTime () {
+            setTimeout(function () {
+              console.info(self.time);
+              if (self.time === 0) {
+                isTiming = false;
+                self.globalEvBus.$emit('gametimeout');
+              } else {
+                self.time--;
+                minusTime();
+              }
+            }, 1000);
+          }
         }
       }
     }

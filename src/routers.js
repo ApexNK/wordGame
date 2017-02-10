@@ -14,8 +14,8 @@ const routes = [
     component: Stage
   },
   {
-    path: '/finish/:level/name/:modelname',
-    name: 'normalModel',
+    path: '/finish/:level/name/:modelname/curstate/:state',
+    name: 'finish',
     component: FinishPage
   },
   {
