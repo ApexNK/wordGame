@@ -15,12 +15,12 @@
           <div class="row row-wrap no-padding">
             <div class="model">
               <div style="padding: 0px 10px; text-align: right">
-                  <button type="button" @click="goNormalModel()" class="fr">再来一次</button>
+                  <button type="button" @click="tryAgain()" class="fr">再来一次</button>
               </div>
             </div>
             <div class="model">
               <div style="padding: 0px 10px">
-                  <button type="button" @click="goStrageModel()" class="fl">回到首页</button>
+                  <button type="button" @click="goHomePage()" class="fl">回到首页</button>
               </div>
             </div>
           </div>
@@ -30,42 +30,34 @@
 
 <script>
     import HeaderBar from 'components/Header.vue';
-    import Ranger from 'components/Ranger.vue';
-    import RangeSlider from 'vue-range-slider';
-    import 'vue-range-slider/dist/vue-range-slider.css';
 
     export default {
       components: {
-        'HeaderBar': HeaderBar,
-        'RangeSlider': RangeSlider,
-        Ranger
+        'HeaderBar': HeaderBar
       },
       data: function () {
         return {
-          val: 1,
-          step: 2,
-          scale: [0, 90, 200],
-          sliderValue: 1
+          ErrorList: []
         }
       },
       mounted () {
-        console.log(55)
+        console.log('finished');
       },
       methods: {
-        goNormalModel () {
-          let level = this.sliderValue;
-          this.$router.push({name: 'normalModel', params: {level}});
+        tryAgain () {
+          let level = this.$route.params.level;
+          let pagename = this.$route.params.modelname;
+          this.$router.push({name: pagename, params: {level}});
         },
-        goStrageModel () {
+        goHomePage () {
           let level = this.sliderValue;
-          this.$router.push({name: 'strangeModel', params: {level}});
+          this.$router.push({name: 'home'});
         }
       }
     }
 </script>
 <style lang="scss" scoped>
   @import '~STYLE/mixin.scss';
-  @import '~STYLE/components/NineGrid.scss';
   .slider { 
   /* overwrite slider styles */
     width: 80%;

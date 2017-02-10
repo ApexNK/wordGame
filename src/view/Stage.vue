@@ -242,6 +242,7 @@
         },
         gameOver () {
           console.info('game over');
+          this.$router.replace({name: 'finish', params: {level:this.$route.params.level,modelname:this.$route.name}});
         }
       }
     }

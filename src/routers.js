@@ -1,5 +1,7 @@
 import Home from 'VIEWS/home.vue';
-import Stage from 'VIEWS/Stage.vue'
+import Stage from 'VIEWS/Stage.vue';
+import FinishPage from 'VIEWS/Finish.vue';
+
 const routes = [
   {
     path: '/normalModel/:level',
@@ -10,6 +12,11 @@ const routes = [
     path: '/strangeModel/:level',
     name: 'strangeModel',
     component: Stage
+  },
+  {
+    path: '/finish/:level/name/:modelname',
+    name: 'normalModel',
+    component: FinishPage
   },
   {
     path: '/',
