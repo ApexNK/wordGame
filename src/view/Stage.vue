@@ -156,10 +156,11 @@
       mounted () {
         this.initListData();
         dataServer.setWordList(this.wordList);
-        this.globalEvBus.$on('gametimeout', function () {
-          this.gameOver();
-        }.bind(this));
+        this.globalEvBus.$on('gametimeout', this.gameOver);
         this.readyGo();
+      },
+      destroyed () {
+        this.globalEvBus.$remove('gametimeout', this.gameOver);
       },
       methods: {
         initListData () {

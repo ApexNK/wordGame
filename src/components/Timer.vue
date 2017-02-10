@@ -27,6 +27,11 @@
       mounted () {
 
       },
+      destroyed () {
+        if (clock) {
+          clearInterval(clock);
+        }
+      },
       methods: {
         start: function () {
           clock = setInterval(() => {
@@ -39,6 +44,7 @@
         },
         pause: function () {
           clearInterval(clock);
+          clock = null;
           this.globalEvBus.$emit('gametimeout');
         },
         reset: function () {

@@ -51,10 +51,8 @@ const dragX = {
   bind () {},
   inserted (el, binding, vnode, oldVnode) {
     let dragEle = new DragX(el);
-    debugger;
     console.log(dragEle);
     if (binding.value && typeof binding.value === 'function') {
-      debugger;
       dragEle.onDrag(binding.value);
     }
   }
