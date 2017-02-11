@@ -7,7 +7,7 @@
           </div>
           
           <div style="margin: 20px auto; width: 100%; text-align: center">
-              <!--<Ranger> </Ranger>-->
+              <Ranger v-on:change="change"> </Ranger>
               <range-slider  class="slider" min="1" max="80" step="1" v-model="sliderValue"></range-slider>
           </div>
           <div style="margin: 20px auto; width: 300px; text-align: center">
@@ -60,6 +60,9 @@
         goStrageModel () {
           let level = this.sliderValue;
           this.$router.push({name: 'strangeModel', params: {level}});
+        },
+        change (val) {
+          console.log(val);
         }
       }
     }

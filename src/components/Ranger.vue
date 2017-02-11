@@ -1,14 +1,21 @@
 <template>
     <div class="ranger-box">
-        <div class="progress-bar"></div>
-        <span v-drag-x="ondrag" :min="0" :max="150" class="pointer startPointer"></span>
-        <span v-drag-x="ondrag" class="pointer endPointer"></span>
+        <div class="progress-bar" :style="style"></div>
+        <span v-drag-x="ondrag1" class="pointer startPointer"></span>
+        <span v-drag-x="ondrag2" class="pointer endPointer"></span>
     </div>
 </template>
 <script>
     import dragX from 'components/drag.js';
     export default {
       directives: {dragX},
+      data () {
+        return {
+          val1: 0,
+          val2: 0,
+          width: 0
+        }
+      },
       props: {
         min: {
           type: Number,
@@ -24,11 +31,30 @@
         }
       },
       mounted () {
-
+        this.width = this.$el.offsetWidth;
+      },
+      computed: {
+        style () {
+          return {
+            left: `${Math.min(this.val1, this.val2) / this.width * 100}%`,
+            right: `${(this.width - Math.max(this.val1, this.val2)) / this.width * 100}%`
+          };
+        }
       },
       methods: {
-        ondrag (x) {
-          console.log(x);
+        ondrag1 (x) {
+          this.val1 = x;
+          this.emitVal();
+        },
+        ondrag2 (x) {
+          this.val2 = x;
+          this.emitVal();
+        },
+        emitVal () {
+          this.$emit('change', {
+            start: Math.floor(Math.min(this.val1, this.val2) / this.width * 100),
+            end: Math.floor(Math.max(this.val1, this.val2) / this.width * 100)
+          });
         }
       }
     }
@@ -45,7 +71,6 @@
             position: absolute;
             height: 4px;
             border-radius: 2px;
-            width: 2%;
             background: #21fb92;
         }
         .pointer {

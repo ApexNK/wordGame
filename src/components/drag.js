@@ -1,9 +1,11 @@
 class DragX {
-  constructor (oEle) {
+  constructor (oEle, min = 0, max = 100) {
     this.oEle = oEle;
     this.curX = 0;
     this.startX = 0;
     this.lastMoveX = 0;
+    this.min = min;
+    this.max = max;
     this.init();
     this.onDragCallBacks = [];
     this.onDragEndCallBacks = [];
@@ -12,6 +14,12 @@ class DragX {
     this.oEle.addEventListener('touchstart', this.touchStartCb.bind(this));
   }
   setOffsetX (curX) {
+    if (this.curX < this.min) {
+      this.curX = this.min;
+    }
+    if (this.curX > this.max) {
+      this.curX = this.max;
+    }
     this.oEle.style.left = `${curX}px`;
   }
   touchStartCb (ev) {
@@ -36,6 +44,7 @@ class DragX {
     let curTouch = ev.changedTouches[0];
     let nowX = curTouch.pageX;
     this.curX += (nowX - this.lastMoveX);
+    this.setOffsetX(this.curX);
     this.oEle.removeEventListener('touchmove', this.touchMoveCb.bind(this));
     this.oEle.removeEventListener('touchend', this.touchEndCb.bind(this));
     this.onDragEndCallBacks.forEach(fn => fn(this.curX));
@@ -50,7 +59,9 @@ class DragX {
 const dragX = {
   bind () {},
   inserted (el, binding, vnode, oldVnode) {
-    let dragEle = new DragX(el);
+    console.log(el);
+    let max = el.parentNode.offsetWidth;
+    let dragEle = new DragX(el, 0, parseInt(max));
     console.log(dragEle);
     if (binding.value && typeof binding.value === 'function') {
       dragEle.onDrag(binding.value);
