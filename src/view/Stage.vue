@@ -33,11 +33,10 @@
 <script>
     import HeaderBar from 'components/Header.vue';
     import dataServer from 'PLUGINS/dataServer.js';
-
     let prevSelected = null;
-    const defaultSeconds = 30;
-    let correctNum = 0;
+    const defaultSeconds = 5;
     const totalPairs = 5;
+    let timeHandler = null;
     let listData = [
       {
         'name': 'aberrant',
@@ -151,7 +150,9 @@
           wordList: listData,
           cardList: [],
           startTime: new Date().getTime(),
-          wastedTime: 0
+          wastedTime: 0,
+          correctNum: 0,
+          isNormal: true
         };
       },
       components: {
@@ -160,19 +161,17 @@
       mounted () {
         this.initListData();
         dataServer.setWordList(this.wordList);
-        this.globalEvBus.$on('gametimeout', this.gameOver);
         this.readyGo();
       },
       destroyed () {
-        this.globalEvBus.$remove('gametimeout', this.gameOver);
       },
       methods: {
         initListData () {
           let self = this;
-          let isNormal = (this.$route.name === 'normalModel');
+          this.isNormal = (this.$route.name === 'normalModel');
           let types = ['type1st', 'type2nd', 'type3rd', 'type4th', 'type5th'];
           let allTypes = [];
-          if (!isNormal) {
+          if (!this.isNormal) {
             for (let i = 0; i < 2; i++) {
               allTypes = allTypes.concat(types);
             }
@@ -188,7 +187,7 @@
               isChosen: false,
               isError: false
             };
-            if (!isNormal) {
+            if (!this.isNormal) {
               card.styleType = allTypes[index];
             }
             self.cardList.push(card);
@@ -219,11 +218,13 @@
             item.isHidden = true;
             prevSelected.value.isHidden = true;
             prevSelected = null;
-            correctNum++;
-            if (correctNum === totalPairs) {
+            this.correctNum++;
+            console.info('correctNum:' + this.correctNum);
+            if (this.correctNum === totalPairs) {
               debugger;
               this.gameTime = 0;
-              this.goToSuccessPage();
+              this.gameOver(true);
+              // this.goToSuccessPage();
             }
             return;
           }
@@ -245,40 +246,38 @@
             if (this.time === 0) {
               clearInterval(clock);
               this.startGame = true;
-              this.globalEvBus.$emit('startTimer');
               this.startTimer();
             } else {
               this.time--;
             }
           }.bind(this), 1000);
         },
-        gameOver () {
+        gameOver (success) {
           console.info('game over');
-          this.goToFailPage();
+          clearInterval(timeHandler);
+          timeHandler = null;
+          success ? this.goToSuccessPage() : this.goToFailPage();
         },
         startTimer () {
-          var self = this;
-          minusTime();
-          function minusTime () {
-            setTimeout(function () {
-              console.info(self.gameTime);
-              if (self.gameTime <= 0) {
-                self.gameOver();
-              } else {
-                self.gameTime--;
-                minusTime();
-              }
-            }, 1000);
-          }
+          timeHandler = setInterval(function () {
+            if (this.gameTime === 0) {
+              this.gameOver(false);
+            } else {
+              this.gameTime--;
+            }
+          }.bind(this), 1000);
         },
         goToSuccessPage () {
           let name = this.isNormal ? 'normalModel' : 'strangeModel';
-          console.info(name);
           this.$router.replace({name: 'finish', params: {level: this.$route.params.level, modelname: name, state: 1}});
         },
         goToFailPage () {
           let name = this.isNormal ? 'normalModel' : 'strangeModel';
-          console.info(name);
+          this.cardList.forEach((item) => {
+            if (!item.isHidden) {
+              dataServer.setErrorId(item.id);
+            }
+          });
           this.$router.replace({name: 'finish', params: {level: this.$route.params.level, modelname: name, state: 0}});
         }
       }

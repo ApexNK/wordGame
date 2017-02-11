@@ -51,10 +51,8 @@
         console.log('finished');
         if (this.$route.params.state === 1) {
           this.title = ' 恭喜你，挑战通过';
-          debugger;
         } else {
           this.title = ' 非常遗憾，挑战失败';
-          debugger;
         }
         this.ErrorList = dataServer.getErrorList();
       },
@@ -62,7 +60,6 @@
         tryAgain () {
           let level = this.$route.params.level;
           let pagename = this.$route.params.modelname;
-          debugger;
           this.$router.replace({name: pagename, params: {level}});
         },
         goHomePage () {
