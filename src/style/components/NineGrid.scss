@@ -2,14 +2,8 @@
     flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
   }
-  .col-33-rem {
+  %grid-col {
     position: relative;
-    -moz-flex: 0 0 5.333333rem;
-    -ms-flex: 0 0 5.333333rem;
-    flex: 0 0 5.333333rem;
-    max-width: 5.333333rem;
-    height: 5.333333rem;
-    padding: 1px;
     @include box-sizing();
     &.type1st {
       .col-container{
@@ -70,6 +64,26 @@
       background: rgba(220, 164, 187, 0.35);
       border:3px double rgba(220, 164, 187, 0.75);
       color: #DCA4BB;
+      word-wrap: break-word;
+      word-break: break-all;
       // line-height: 5rem;
     }
+  }
+  .col-33-rem {
+    @extend %grid-col;
+    -moz-flex: 0 0 5.333333rem;
+    -ms-flex: 0 0 5.333333rem;
+    flex: 0 0 5.333333rem;
+    max-width: 5.333333rem;
+    height: 5.333333rem;
+    padding: 1px; 
+  }
+  .col-25-rem {
+    @extend %grid-col;
+    -moz-flex: 0 0 4rem;
+    -ms-flex: 0 0 4rem;
+    flex: 0 0 4rem;
+    max-width: 4rem;
+    height: 4rem;
+    padding: 1px;
   }

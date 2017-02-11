@@ -10,7 +10,7 @@
               :disabled="card.isHidden"
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
-              class="col-33-rem animated" v-for="(card, index) in cardList">
+              class="col-25-rem animated" v-for="(card, index) in cardList">
               <div class="col-container">{{card.keyword}}-{{card.id}}</div>
             </div>
         </div>
