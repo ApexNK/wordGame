@@ -34,8 +34,8 @@
     import HeaderBar from 'components/Header.vue';
     import dataServer from 'PLUGINS/dataServer.js';
     let prevSelected = null;
-    const defaultSeconds = 5;
-    const totalPairs = 5;
+    const defaultSeconds = 20;
+    const totalPairs = 10;
     let timeHandler = null;
     let listData = [
       {
@@ -63,41 +63,41 @@
         'lang': 'en',
         'sequence': 4
       },
-      // {
-      //   'name': 'aesthetic',
-      //   'lang': 'en',
-      //   'sequence': 5
-      // },
-      // {
-      //   'name': 'aggressor',
-      //   'lang': 'en',
-      //   'sequence': 6
-      // },
-      // {
-      //   'name': 'alienate',
-      //   'lang': 'en',
-      //   'sequence': 7
-      // },
-      // {
-      //   'name': 'amorphous',
-      //   'lang': 'en',
-      //   'sequence': 8
-      // },
-      // {
-      //   'name': 'ample',
-      //   'lang': 'en',
-      //   'sequence': 9
-      // },
-      // {
-      //   'name': '侵略者，攻击者',
-      //   'lang': 'zh',
-      //   'sequence': 6
-      // },
-      // {
-      //   'name': '充足的',
-      //   'lang': 'zh',
-      //   'sequence': 9
-      // },
+      {
+        'name': 'aesthetic',
+        'lang': 'en',
+        'sequence': 5
+      },
+      {
+        'name': 'aggressor',
+        'lang': 'en',
+        'sequence': 6
+      },
+      {
+        'name': 'alienate',
+        'lang': 'en',
+        'sequence': 7
+      },
+      {
+        'name': 'amorphous',
+        'lang': 'en',
+        'sequence': 8
+      },
+      {
+        'name': 'ample',
+        'lang': 'en',
+        'sequence': 9
+      },
+      {
+        'name': '侵略者，攻击者',
+        'lang': 'zh',
+        'sequence': 6
+      },
+      {
+        'name': '充足的',
+        'lang': 'zh',
+        'sequence': 9
+      },
       {
         'name': '发表演说；处理',
         'lang': 'zh',
@@ -113,26 +113,26 @@
         'lang': 'zh',
         'sequence': 0
       },
-      // {
-      //   'name': '无组织的，不定形的',
-      //   'lang': 'zh',
-      //   'sequence': 8
-      // },
-      // {
-      //   'name': '离间，使孤立',
-      //   'lang': 'zh',
-      //   'sequence': 7
-      // },
+      {
+        'name': '无组织的，不定形的',
+        'lang': 'zh',
+        'sequence': 8
+      },
+      {
+        'name': '离间，使孤立',
+        'lang': 'zh',
+        'sequence': 7
+      },
       {
         'name': '粗糙的，磨损的',
         'lang': 'zh',
         'sequence': 1
       },
-      // {
-      //   'name': '艺术的，审美的',
-      //   'lang': 'zh',
-      //   'sequence': 5
-      // },
+      {
+        'name': '艺术的，审美的',
+        'lang': 'zh',
+        'sequence': 5
+      },
       {
         'name': '荣誉',
         'lang': 'zh',
@@ -159,8 +159,11 @@
         'HeaderBar': HeaderBar
       },
       mounted () {
-        this.initListData();
-        dataServer.setWordList(this.wordList);
+        this.getWordList().then(function (data) {
+          this.wordList = data;
+          this.initListData();
+          dataServer.setWordList(this.wordList);
+        }.bind(this));
         this.readyGo();
       },
       destroyed () {
@@ -181,7 +184,7 @@
           }
           this.wordList.forEach((item, index) => {
             let card = {
-              id: item.sequence,
+              id: item.id,
               keyword: item.name,
               isHidden: false,
               isChosen: false,
@@ -191,6 +194,12 @@
               card.styleType = allTypes[index];
             }
             self.cardList.push(card);
+          });
+        },
+        getWordList () {
+          return this._http.get('wordlist', {startindex: this.$route.params.level, endindex: 80}).then(function (data) {
+            console.info(data);
+            return data.value;
           });
         },
         cardClick (id, index) {
@@ -221,7 +230,6 @@
             this.correctNum++;
             console.info('correctNum:' + this.correctNum);
             if (this.correctNum === totalPairs) {
-              debugger;
               this.gameTime = 0;
               this.gameOver(true);
               // this.goToSuccessPage();

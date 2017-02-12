@@ -16,7 +16,7 @@ function fnSetErrorId (id) {
   let pariWord = {};
   for (let i = 0; i < wordList.length; i++) {
     let item = wordList[i];
-    if (item.sequence === id) {
+    if (item.id === id) {
       pariWord[item.lang] = item.name;
     }
   }

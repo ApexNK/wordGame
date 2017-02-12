@@ -61,7 +61,9 @@ const dragX = {
   inserted (el, binding, vnode, oldVnode) {
     console.log(el);
     let max = el.parentNode.offsetWidth;
-    let dragEle = new DragX(el, 0, parseInt(max));
+    console.info(parseInt(max));
+    let dragEle = new DragX(el, 1, parseInt(max));
+    console.info('?**?***** dragEle *****')
     console.log(dragEle);
     if (binding.value && typeof binding.value === 'function') {
       dragEle.onDrag(binding.value);

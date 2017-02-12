@@ -1,6 +1,8 @@
 <template>
     <div class="ranger-box">
         <div class="progress-bar" :style="style"></div>
+        <div :style="{left: style.left}" style="position:absolute;height:20px; width:20px;margin-top:15px">{{vals.start}}</div>
+        <div :style="{right: style.right}" style="position:absolute;height: 20px; width:20px;margin-top:15px">{{vals.end}}</div>
         <span v-drag-x="ondrag1" class="pointer startPointer"></span>
         <span v-drag-x="ondrag2" class="pointer endPointer"></span>
     </div>
@@ -36,18 +38,28 @@
       computed: {
         style () {
           return {
-            left: `${Math.min(this.val1, this.val2) / this.width * 100}%`,
-            right: `${(this.width - Math.max(this.val1, this.val2)) / this.width * 100}%`
+            left: `${(Math.min(this.val1, this.val2) - 10) / this.width * 100}%`,
+            right: `${((this.width - Math.max(this.val1, this.val2)) - 10) / this.width * 100}%`
+          };
+        },
+        vals () {
+          return {
+            start: Math.floor(Math.min(this.val1, this.val2) / this.width * 100),
+            end: Math.floor(Math.max(this.val1, this.val2) / this.width * 100)
           };
         }
       },
       methods: {
         ondrag1 (x) {
           this.val1 = x;
+          this.minVal = 1;
+          this.maxVal = 80;
           this.emitVal();
         },
         ondrag2 (x) {
           this.val2 = x;
+          this.minVal = 1;
+          this.maxVal = 80;
           this.emitVal();
         },
         emitVal () {
