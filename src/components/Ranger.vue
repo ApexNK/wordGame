@@ -3,8 +3,8 @@
         <div class="progress-bar" :style="style"></div>
         <div :style="{left: style.left}" style="position:absolute;height:20px; width:20px;margin-top:15px">{{vals.start}}</div>
         <div :style="{right: style.right}" style="position:absolute;height: 20px; width:20px;margin-top:15px">{{vals.end}}</div>
-        <span v-drag-x="ondrag1" :data-min="dragMin" :data-start="startVal/max*100" class="pointer"></span>
-        <span v-drag-x="ondrag2" :data-min="dragMin" :data-start="startVal/max*100" class="pointer"></span>
+        <span v-drag-x="ondrag1" :data-min="dragMin" :data-start="startdefault/max*100" class="pointer"></span>
+        <span v-drag-x="ondrag2" :data-min="dragMin" :data-start="enddefault/max*100" class="pointer"></span>
     </div>
 </template>
 <script>
@@ -16,7 +16,8 @@
         return {
           val1: 0,
           val2: 0,
-          width: 0}
+          width: 0
+        }
       },
       props: {
         min: {
@@ -27,9 +28,13 @@
           type: Number,
           default: 100
         },
-        startVal: {
+        startdefault: {
           type: Number,
-          default: 0
+          default: 1
+        },
+        enddefault: {
+          type: Number,
+          default: 80
         }
       },
       mounted () {
@@ -39,8 +44,8 @@
       computed: {
         style () {
           return {
-            left: `${(Math.min(this.val1, this.val2)) / this.width * 100}%`,
-            right: `${((this.width - Math.max(this.val1, this.val2))) / this.width * 100}%`
+            left: `${(Math.min(this.val1, this.val2) - 10) / this.width * 100}%`,
+            right: `${((this.width - Math.max(this.val1, this.val2)) - 10) / this.width * 100}%`
           };
         },
         vals () {

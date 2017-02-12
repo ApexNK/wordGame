@@ -6,12 +6,9 @@
               APEX 800
           </div>
           
-          <div style="margin: 20px auto; width: 180px; text-align: center">
-              <Ranger style="width: 100%;" v-on:change="change" :min="1" :max="80" :startVal='40'> </Ranger>
+          <div style="margin: 40px auto; width: 180px; text-align: center">
+              <Ranger style="width: 100%;" v-on:change="change" :min="1" :max="80" :startdefault='1' :enddefault='20'> </Ranger>
               <!--<range-slider  class="slider" min="1" :max="80" step="1" v-model="sliderValue"></range-slider>-->
-          </div>
-          <div style="margin: 20px auto; width: 300px; text-align: center">
-              <!--选择级别：{{sliderValue}}-->
           </div>
           <div class="row row-wrap no-padding">
             <div class="model">
@@ -63,6 +60,7 @@
           let start = this.startIndex;
           let end = this.endIndex;
           start = start || 1;
+          start = end > 80 ? 80 : start;
           end = end > 80 ? 80 : end;
           this.$router.push({name: pageName, params: {startindex: start, endindex: end}});
         },
