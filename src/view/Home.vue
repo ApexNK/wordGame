@@ -44,9 +44,9 @@
       data: function () {
         return {
           val: 1,
-          step: 2,
-          scale: [0, 90, 200],
-          sliderValue: 1
+          sliderValue: 1,
+          startIndex: 1,
+          endIndex: 80
         }
       },
       mounted () {
@@ -54,15 +54,22 @@
       },
       methods: {
         goNormalModel () {
-          let level = this.sliderValue;
-          this.$router.push({name: 'normalModel', params: {level}});
+          this.goToNextPage('normalModel');
         },
         goStrageModel () {
-          let level = this.sliderValue;
-          this.$router.push({name: 'strangeModel', params: {level}});
+          this.goToNextPage('strangeModel');
+        },
+        goToNextPage (pageName) {
+          let start = this.startIndex;
+          let end = this.endIndex;
+          start = start || 1;
+          end = end > 80 ? 80 : end;
+          this.$router.push({name: pageName, params: {startindex: start, endindex: end}});
         },
         change (val) {
           console.log(val);
+          this.startIndex = val.start || this.startIndex;
+          this.endIndex = val.end || this.endIndex;
         }
       }
     }

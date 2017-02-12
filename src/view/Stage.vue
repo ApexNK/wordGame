@@ -11,7 +11,7 @@
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-25-rem animated" v-for="(card, index) in cardList">
-              <div class="col-container">{{card.keyword}}-{{card.id}}</div>
+              <div class="col-container" style="overflow:auto">{{card.keyword}}</div>
             </div>
         </div>
       </div>
@@ -33,10 +33,9 @@
 <script>
     import HeaderBar from 'components/Header.vue';
     import dataServer from 'PLUGINS/dataServer.js';
-    let prevSelected = null;
-    const defaultSeconds = 20;
+
+    const defaultSeconds = 30;
     const totalPairs = 10;
-    let timeHandler = null;
     let listData = [
       {
         'name': 'aberrant',
@@ -146,13 +145,16 @@
           startGame: false,
           time: 3,
           gameTime: defaultSeconds,
-          modelName: '普通模式',
+          modelName: '欢迎挑战《普通模式》',
           wordList: listData,
           cardList: [],
           startTime: new Date().getTime(),
           wastedTime: 0,
           correctNum: 0,
-          isNormal: true
+          isNormal: true,
+          timeHandler: null,
+          prevSelected: null,
+          readyTimer: null
         };
       },
       components: {
@@ -167,11 +169,20 @@
         this.readyGo();
       },
       destroyed () {
+        if (this.readyTimer) {
+          clearInterval(this.readyTimer);
+          this.readyTimer = null;
+        }
+        if (this.timeHandler) {
+          clearInterval(this.timeHandler);
+          this.timeHandler = null;
+        }
       },
       methods: {
         initListData () {
           let self = this;
           this.isNormal = (this.$route.name === 'normalModel');
+          this.modelName = this.isNormal ? '欢迎挑战《普通模式》' : '欢迎挑战《变态模式》';
           let types = ['type1st', 'type2nd', 'type3rd', 'type4th', 'type5th'];
           let allTypes = [];
           if (!this.isNormal) {
@@ -197,9 +208,16 @@
           });
         },
         getWordList () {
-          return this._http.get('wordlist', {startindex: this.$route.params.level, endindex: 80}).then(function (data) {
+          let startIndex = this.$route.params.startindex;
+          let endIndex = this.$route.params.endindex;
+          console.info(this.$route.params);
+          return this._http.get('wordlist', {startindex: startIndex, endindex: endIndex}).then(function (data) {
             console.info(data);
-            return data.value;
+            let wlist = data.value;
+            wlist.sort((o1, o2) => {
+              return Math.floor(Math.random() * 10) > 5 ? 1 : -1;
+            });
+            return wlist;
           });
         },
         cardClick (id, index) {
@@ -207,52 +225,50 @@
           if (item.isHidden) {
             return;
           }
-
-          if (!prevSelected) {
+          if (!this.prevSelected) {
             item.isChosen = true;
-            prevSelected = {
+            this.prevSelected = {
               key: index,
               value: item
             };
             return;
           }
 
-          if (prevSelected.key === index) {
+          if (this.prevSelected.key === index) {
             item.isChosen = false;
-            prevSelected = null;
+            this.prevSelected = null;
             return;
           }
 
-          if (id === prevSelected.value.id) {
+          if (id === this.prevSelected.value.id) {
             item.isHidden = true;
-            prevSelected.value.isHidden = true;
-            prevSelected = null;
+            this.prevSelected.value.isHidden = true;
+            this.prevSelected = null;
             this.correctNum++;
             console.info('correctNum:' + this.correctNum);
             if (this.correctNum === totalPairs) {
               this.gameTime = 0;
               this.gameOver(true);
-              // this.goToSuccessPage();
             }
             return;
           }
-
           item.isError = true;
-          prevSelected.value.isError = true;
+          this.prevSelected.value.isError = true;
           dataServer.setErrorId(id);
-          dataServer.setErrorId(prevSelected.value.id);
+          dataServer.setErrorId(this.prevSelected.value.id);
           setTimeout(function () {
             item.isError = false;
-            prevSelected.value.isError = false;
-            prevSelected.value.isChosen = false;
-            prevSelected = null;
-          }, 400);
+            this.prevSelected.value.isError = false;
+            this.prevSelected.value.isChosen = false;
+            this.prevSelected = null;
+          }.bind(this), 400);
           this.$forceUpdate();
         },
         readyGo () {
-          let clock = setInterval(function () {
+          this.readyTimer = setInterval(function () {
             if (this.time === 0) {
-              clearInterval(clock);
+              clearInterval(this.readyTimer);
+              this.readyTimer = null;
               this.startGame = true;
               this.startTimer();
             } else {
@@ -262,12 +278,12 @@
         },
         gameOver (success) {
           console.info('game over');
-          clearInterval(timeHandler);
-          timeHandler = null;
+          clearInterval(this.timeHandler);
+          this.timeHandler = null;
           success ? this.goToSuccessPage() : this.goToFailPage();
         },
         startTimer () {
-          timeHandler = setInterval(function () {
+          this.timeHandler = setInterval(function () {
             if (this.gameTime === 0) {
               this.gameOver(false);
             } else {
@@ -276,17 +292,21 @@
           }.bind(this), 1000);
         },
         goToSuccessPage () {
-          let name = this.isNormal ? 'normalModel' : 'strangeModel';
-          this.$router.replace({name: 'finish', params: {level: this.$route.params.level, modelname: name, state: 1}});
+          this.goToFinishPage(true);
         },
         goToFailPage () {
-          let name = this.isNormal ? 'normalModel' : 'strangeModel';
           this.cardList.forEach((item) => {
             if (!item.isHidden) {
               dataServer.setErrorId(item.id);
             }
           });
-          this.$router.replace({name: 'finish', params: {level: this.$route.params.level, modelname: name, state: 0}});
+          this.goToFinishPage(false);
+        },
+        goToFinishPage (isSuccessed) {
+          let name = this.isNormal ? 'normalModel' : 'strangeModel';
+          let startIndex = this.$route.params.startindex;
+          let endIndex = this.$route.params.endindex;
+          this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0)}});
         }
       }
     }

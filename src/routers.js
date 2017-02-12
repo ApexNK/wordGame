@@ -4,17 +4,17 @@ import FinishPage from 'VIEWS/Finish.vue';
 
 const routes = [
   {
-    path: '/normalModel/:level',
+    path: '/normalModel/:startindex/end/:endindex',
     name: 'normalModel',
     component: Stage
   },
   {
-    path: '/strangeModel/:level',
+    path: '/strangeModel/:startindex/end/:endindex',
     name: 'strangeModel',
     component: Stage
   },
   {
-    path: '/finish/:level/name/:modelname/curstate/:state',
+    path: '/finish/:startindex/end/:endindex/name/:modelname/curstate/:state',
     name: 'finish',
     component: FinishPage
   },

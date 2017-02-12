@@ -58,9 +58,10 @@
       },
       methods: {
         tryAgain () {
-          let level = this.$route.params.level;
+          let start = this.$route.params.startindex;
+          let end = this.$route.params.endindex;
           let pagename = this.$route.params.modelname;
-          this.$router.replace({name: pagename, params: {level}});
+          this.$router.replace({name: pagename, params: {startindex: start, endindex: end}});
         },
         goHomePage () {
           this.$router.replace({name: 'home'});

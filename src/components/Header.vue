@@ -1,8 +1,8 @@
 <template>
     <div class="header-bar row">
-        <a class="button" @click="backClick">
+        <!--<a class="button" @click="backClick">
             返回
-        </a>
+        </a>-->
         <h4 class="col text-center title">
             {{title}}
         </h4>
