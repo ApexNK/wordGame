@@ -6,9 +6,9 @@
               APEX 800
           </div>
           
-          <div style="margin: 40px auto; width: 100%; text-align: center">
-              <Ranger v-on:change="change" :min='1' :max='80' :startVal='1'> </Ranger>
-              <!--<range-slider  class="slider" min="1" max="80" step="1" v-model="sliderValue"></range-slider>-->
+          <div style="margin: 20px auto; width: 180px; text-align: center">
+              <Ranger style="width: 100%;" v-on:change="change" :min="1" :max="80" :startVal='40'> </Ranger>
+              <!--<range-slider  class="slider" min="1" :max="80" step="1" v-model="sliderValue"></range-slider>-->
           </div>
           <div style="margin: 20px auto; width: 300px; text-align: center">
               <!--选择级别：{{sliderValue}}-->

@@ -1,32 +1,34 @@
 class DragX {
-  constructor (oEle, min = 0, max = 100) {
+  constructor (oEle, min = 0, max = 100, start = 0) {
     this.oEle = oEle;
-    this.curX = 0;
-    this.startX = 0;
-    this.lastMoveX = 0;
+    this.curX = start;
+    this.lastMoveX = start;
     this.min = min;
     this.max = max;
+    this.start = start;
+    console.log(min, max);
     this.init();
     this.onDragCallBacks = [];
     this.onDragEndCallBacks = [];
   }
   init () {
+    this.setOffsetX();
     this.oEle.addEventListener('touchstart', this.touchStartCb.bind(this));
   }
-  setOffsetX (curX) {
-    if (this.curX < this.min) {
+  setOffsetX (curX = 0) {
+    if (this.curX <= this.min) {
       this.curX = this.min;
     }
     if (this.curX > this.max) {
       this.curX = this.max;
     }
-    this.oEle.style.left = `${curX}px`;
+    this.oEle.style.left = `${this.curX}px`;
   }
   touchStartCb (ev) {
     ev.preventDefault();
     let curTouch = ev.touches[0];
     this.lastMoveX = curTouch.pageX;
-    this.startX = this.lastMoveX;
+    // this.startX = this.lastMoveX;
     this.oEle.addEventListener('touchmove', this.touchMoveCb.bind(this));
     this.oEle.addEventListener('touchend', this.touchEndCb.bind(this));
   }
@@ -49,25 +51,30 @@ class DragX {
     this.oEle.removeEventListener('touchend', this.touchEndCb.bind(this));
     this.onDragEndCallBacks.forEach(fn => fn(this.curX));
   }
-  onDrag (fn) {
+  onDrag (fn, isExcuteNow = false) {
+    if (isExcuteNow) {
+      fn(this.curX);
+    }
     this.onDragCallBacks.push(fn);
   }
-  onDragEnd (fn) {
+  onDragEnd (fn, isExcuteNow = false) {
+    fn(this.curX);
     this.onDragEndCallBacks.push(fn);
   }
 }
 const dragX = {
-  bind () {},
-  inserted (el, binding, vnode, oldVnode) {
-    console.log(el);
-    let max = el.parentNode.offsetWidth;
-    console.info(parseInt(max));
-    let dragEle = new DragX(el, 1, parseInt(max));
-    console.info('?**?***** dragEle *****')
-    console.log(dragEle);
-    if (binding.value && typeof binding.value === 'function') {
-      dragEle.onDrag(binding.value);
-    }
+  // bind () {},
+  bind (el, binding, vnode, oldVnode) {
+    setTimeout(function () {
+      let max = parseFloat(el.parentNode.offsetWidth);
+      let min = max * parseFloat(el.dataset.dragMin) / 100 || 0;
+      let start = max * parseFloat(el.dataset.start) / 100 || 0;
+      console.log(start);
+      let dragEle = new DragX(el, min, max, start);
+      if (binding.value && typeof binding.value === 'function') {
+        dragEle.onDrag(binding.value, true);
+      }
+    }, 0);
   }
 };
 export default dragX

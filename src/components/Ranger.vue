@@ -3,11 +3,12 @@
         <div class="progress-bar" :style="style"></div>
         <div :style="{left: style.left}" style="position:absolute;height:20px; width:20px;margin-top:15px">{{vals.start}}</div>
         <div :style="{right: style.right}" style="position:absolute;height: 20px; width:20px;margin-top:15px">{{vals.end}}</div>
-        <span v-drag-x="ondrag1" class="pointer startPointer"></span>
-        <span v-drag-x="ondrag2" class="pointer endPointer"></span>
+        <span v-drag-x="ondrag1" :data-min="dragMin" :data-start="startVal/max*100" class="pointer"></span>
+        <span v-drag-x="ondrag2" :data-min="dragMin" :data-start="startVal/max*100" class="pointer"></span>
     </div>
 </template>
 <script>
+    // TODO 最小值控制仍然优点问题， 后续优化
     import dragX from 'components/drag.js';
     export default {
       directives: {dragX},
@@ -15,8 +16,7 @@
         return {
           val1: 0,
           val2: 0,
-          width: 0
-        }
+          width: 0}
       },
       props: {
         min: {
@@ -34,38 +34,36 @@
       },
       mounted () {
         this.width = this.$el.offsetWidth;
+        this.dragMin = this.min / this.max * 100;
       },
       computed: {
         style () {
           return {
-            left: `${(Math.min(this.val1, this.val2) - 10) / this.width * 100}%`,
-            right: `${((this.width - Math.max(this.val1, this.val2)) - 10) / this.width * 100}%`
+            left: `${(Math.min(this.val1, this.val2)) / this.width * 100}%`,
+            right: `${((this.width - Math.max(this.val1, this.val2))) / this.width * 100}%`
           };
         },
         vals () {
           return {
-            start: Math.floor(Math.min(this.val1, this.val2) / this.width * 100),
-            end: Math.floor(Math.max(this.val1, this.val2) / this.width * 100)
+            start: Math.ceil(Math.min((this.val1 || this.min), this.val2) / this.width * this.max),
+            end: Math.ceil(Math.max(this.val1, this.val2) / this.width * this.max)
           };
         }
       },
       methods: {
         ondrag1 (x) {
           this.val1 = x;
-          this.minVal = 1;
-          this.maxVal = 80;
           this.emitVal();
         },
         ondrag2 (x) {
           this.val2 = x;
-          this.minVal = 1;
-          this.maxVal = 80;
           this.emitVal();
         },
         emitVal () {
+          let self = this;
           this.$emit('change', {
-            start: Math.floor(Math.min(this.val1, this.val2) / this.width * 100),
-            end: Math.floor(Math.max(this.val1, this.val2) / this.width * 100)
+            start: self.vals.start,
+            end: self.vals.end
           });
         }
       }
