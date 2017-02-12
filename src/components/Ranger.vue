@@ -8,6 +8,7 @@
     </div>
 </template>
 <script>
+    // TODO 最小值控制仍然优点问题， 后续优化
     import dragX from 'components/drag.js';
     export default {
       directives: {dragX},
