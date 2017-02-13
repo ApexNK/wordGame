@@ -186,7 +186,7 @@
           let types = ['type1st', 'type2nd', 'type3rd', 'type4th', 'type5th'];
           let allTypes = [];
           if (!this.isNormal) {
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 4; i++) {
               allTypes = allTypes.concat(types);
             }
             allTypes.sort((o1, o2) => {

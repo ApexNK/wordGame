@@ -1,8 +1,12 @@
 <template>
     <div class="ranger-box">
         <div class="progress-bar" :style="style"></div>
-        <div :style="{left: style.left}" style="position:absolute;height:20px; width:20px;margin-top:15px">{{vals.start}}</div>
-        <div :style="{right: style.right}" style="position:absolute;height: 20px; width:20px;margin-top:15px">{{vals.end}}</div>
+        <div :style="{left: style.left}" style="position:absolute;height:20px; width:20px;margin-top:-40px">
+          <div class="bubble tip-bubble-bottom">{{vals.start}}</div>
+        </div>
+        <div :style="{right: style.right}" style="position:absolute;height: 20px; width:20px;margin-top:-40px">
+          <div class="bubble tip-bubble-bottom">{{vals.end}}</div>
+        </div>
         <span v-drag-x="ondrag1" :data-min="dragMin" :data-start="startdefault/max*100" class="pointer"></span>
         <span v-drag-x="ondrag2" :data-min="dragMin" :data-start="enddefault/max*100" class="pointer"></span>
     </div>
@@ -89,21 +93,47 @@
             background: #21fb92;
         }
         .pointer {
-              display: block;
-              position: absolute;
-              top: 50%;
-              left: 0;
-              box-sizing: border-box;
-              height: 20px;
-              width: 20px;
-              border: 1px solid #f5f5f5;
-              border-radius: 50%;
-              background-color: #fff;
-              box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
-              -webkit-transform: translate(-50%, -50%);
-              -ms-transform: translate(-50%, -50%);
-              transform: translate(-50%, -50%);
-              cursor: pointer;
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          box-sizing: border-box;
+          height: 20px;
+          width: 20px;
+          border: 1px solid #f5f5f5;
+          border-radius: 50%;
+          background-color: #fff;
+          box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          cursor: pointer;
+        }
+        .bubble {
+          display:inline-block;
+          position:relative;
+          background-color:#21fb92;
+          width:20px;
+          height: 20px;
+          padding:2px;
+          color:#0c0c0c;
+          text-align:center;
+          border-width: 1px 1px 1px 1px;
+          border-radius:100%;
+        }
+        .bubble:before {
+          content:'';
+          position:absolute;
+          width:0;
+          height: 0;  
+          border:8px solid;
+          color:transparent;
+        }
+        .tip-bubble-bottom:before {
+          border-top-color:#21fb92;
+          left:50%;
+          bottom:-13px;
+          margin-left:-8px;
         }
     }
 </style>
