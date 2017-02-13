@@ -3,19 +3,12 @@
       <div>
         <slot></slot>
         <div :class="'loader'+scrollId " class="text-center spinner-box" v-show="canLoad">
-          <Spinner class="spinner"></Spinner>
         </div>
       </div>
     </div>
 </template>
 <script>
-    import { Spinner } from 'mint-ui';
-    // import Vue from 'vue';
-    // Vue.use(InfiniteScroll);
-    // v-infinite-scroll="onInfinited" infinite-scroll-distance="100" infinite-scroll-disabled="canLoad"
-    // import {IScrollProbe} from 'STATIC_LIB/IScroll/index.js';
     export default {
-      // directives: {InfiniteScroll},
       props: {
         dist: {type: Number, default: 0},
         scrollId: {
@@ -66,16 +59,13 @@
       created () {
       },
       destroyed () {
-      },
-      components: {
-        Spinner
       }
     }
 </script>
 <style lang="scss" scoped>
   .spinner-box {
     height: 40px;
-    // padding:10px;
+    /*padding:10px;*/
     line-height: 40px;
     vertical-align: middle;
     .spinner{

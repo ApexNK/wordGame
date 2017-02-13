@@ -5,6 +5,7 @@
           <div>
             <span class="larger-time">{{gameTime | digitalClock}}</span>
           </div>
+          <Scroller>
           <div class="row row-wrap no-padding">
             <div
               :disabled="card.isHidden"
@@ -14,6 +15,7 @@
               <div class="col-container" style="overflow:auto">{{card.keyword}}</div>
             </div>
         </div>
+        </Scroller>
       </div>
       <div class="container has-header" v-show="!startGame">
           <div style="width:80%; border: 1px sienna solid; height: 300px; margin: 50px auto; position: relative;" class="text-center">
@@ -33,6 +35,7 @@
 <script>
     import HeaderBar from 'components/Header.vue';
     import dataServer from 'PLUGINS/dataServer.js';
+    import Scroller from 'components/Scroller.vue';
 
     const defaultSeconds = 30;
     const totalPairs = 10;
@@ -158,7 +161,8 @@
         };
       },
       components: {
-        'HeaderBar': HeaderBar
+        'HeaderBar': HeaderBar,
+        Scroller
       },
       mounted () {
         this.getWordList().then(function (data) {
