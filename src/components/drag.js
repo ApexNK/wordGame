@@ -17,6 +17,7 @@ class DragX {
   }
   setOffsetX (curX = 0) {
     if (this.curX <= this.min) {
+      console.log(this.curX, this.min);
       this.curX = this.min;
     }
     if (this.curX > this.max) {
@@ -67,9 +68,9 @@ const dragX = {
   bind (el, binding, vnode, oldVnode) {
     setTimeout(function () {
       let max = parseFloat(el.parentNode.offsetWidth);
-      let min = max * parseFloat(el.dataset.dragMin) / 100 || 0;
+      let min = max * parseFloat(el.dataset.min) / 100 || 0;
+      console.log(min);
       let start = max * parseFloat(el.dataset.start) / 100 || 0;
-      console.log(start);
       let dragEle = new DragX(el, min, max, start);
       if (binding.value && typeof binding.value === 'function') {
         dragEle.onDrag(binding.value, true);

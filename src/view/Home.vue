@@ -5,7 +5,7 @@
           <div style="margin: 20px auto; width: 300px; text-align: center">
               APEX 800
           </div>
-          
+
           <div style="margin: 40px auto; width: 180px; text-align: center">
               <Ranger style="width: 100%;" v-on:change="change" :min="1" :max="80" :startdefault='1' :enddefault='20'> </Ranger>
               <!--<range-slider  class="slider" min="1" :max="80" step="1" v-model="sliderValue"></range-slider>-->
@@ -65,7 +65,6 @@
           this.$router.push({name: pageName, params: {startindex: start, endindex: end}});
         },
         change (val) {
-          console.log(val);
           this.startIndex = val.start || this.startIndex;
           this.endIndex = val.end || this.endIndex;
         }
@@ -75,7 +74,7 @@
 <style lang="scss" scoped>
   @import '~STYLE/mixin.scss';
   @import '~STYLE/components/NineGrid.scss';
-  .slider { 
+  .slider {
   /* overwrite slider styles */
     width: 80%;
   }
