@@ -1,11 +1,13 @@
 <template>
     <div>
       <header-bar></header-bar>
-        <div class="container has-header" v-show="startGame">
+        <div class="has-header timer-bar"  v-show="startGame">
           <div>
             <span class="larger-time">{{gameTime | digitalClock}}</span>
           </div>
-          <Scroller>
+
+      </div>
+      <Scroller class="container has-timer-bar" v-if="startGame">
           <div class="row row-wrap no-padding">
             <div
               :disabled="card.isHidden"
@@ -14,9 +16,8 @@
               class="col-25-rem animated" v-for="(card, index) in cardList">
               <div class="col-container" style="overflow:auto">{{card.keyword}}</div>
             </div>
-        </div>
-        </Scroller>
-      </div>
+           </div>
+      </Scroller>
       <div class="container has-header" v-show="!startGame">
           <div style="width:80%; border: 1px sienna solid; height: 300px; margin: 50px auto; position: relative;" class="text-center">
               <div class="title">
@@ -321,6 +322,15 @@
   @import '~STYLE/common.scss';
   .hidden {
     opacity: 0;
+  }
+  .timer-bar{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 60px;
+  }
+  .has-timer-bar{
+    top: 104px;
   }
   .title {
     font-size: 1.4em;
