@@ -1,4 +1,4 @@
-import Home from 'VIEWS/home.vue';
+import Home from 'VIEWS/Home.vue';
 import Stage from 'VIEWS/Stage.vue';
 import FinishPage from 'VIEWS/Finish.vue';
 

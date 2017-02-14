@@ -6,7 +6,7 @@
         <h4 class="col text-center title">
             {{title}}
         </h4>
-        <a class="button"></a>
+        <!--<a class="button"></a>-->
     </div>
 </template>
 <script>
@@ -14,7 +14,7 @@
       props: {
         title: {
           type: String,
-          default: '单词连连看'
+          default: 'APEXSAT800高频单词 连连看'
         }
       },
       created () {

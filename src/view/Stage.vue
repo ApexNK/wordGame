@@ -37,8 +37,14 @@
     import HeaderBar from 'components/Header.vue';
     import dataServer from 'PLUGINS/dataServer.js';
     import Scroller from 'components/Scroller.vue';
-
-    const defaultSeconds = 30;
+    const normalObj = {
+      title: '欢迎挑战《普通模式》',
+      time: 45
+    };
+    const strangeObj = {
+      title: '欢迎挑战《变态模式》',
+      time: 30
+    };
     const totalPairs = 10;
     let listData = [
       {
@@ -148,8 +154,8 @@
         return {
           startGame: false,
           time: 3,
-          gameTime: defaultSeconds,
-          modelName: '欢迎挑战《普通模式》',
+          gameTime: 0,
+          modelName: '',
           wordList: listData,
           cardList: [],
           startTime: new Date().getTime(),
@@ -187,7 +193,9 @@
         initListData () {
           let self = this;
           this.isNormal = (this.$route.name === 'normalModel');
-          this.modelName = this.isNormal ? '欢迎挑战《普通模式》' : '欢迎挑战《变态模式》';
+          let currentObj = this.isNormal ? normalObj : strangeObj;
+          this.modelName = currentObj.title;
+          this.gameTime = currentObj.time;
           let types = ['type1st', 'type2nd', 'type3rd', 'type4th', 'type5th'];
           let allTypes = [];
           if (!this.isNormal) {
@@ -308,10 +316,10 @@
           this.goToFinishPage(false);
         },
         goToFinishPage (isSuccessed) {
-          let name = this.isNormal ? 'normalModel' : 'strangeModel';
-          let startIndex = this.$route.params.startindex;
-          let endIndex = this.$route.params.endindex;
-          this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0)}});
+          // let name = this.isNormal ? 'normalModel' : 'strangeModel';
+          // let startIndex = this.$route.params.startindex;
+          // let endIndex = this.$route.params.endindex;
+          // this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0)}});
         }
       }
     }
