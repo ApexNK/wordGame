@@ -1,7 +1,10 @@
 <template>
     <div>
       <header-bar></header-bar>
-        <div class="has-header timer-bar"  v-show="startGame">
+      <div class="has-header timer-bar"  v-show="startGame">
+          <div style="width: 100%; text-align: center; margin-top:10px;">
+            APEXSAT800 高频单词 连连看
+          </div>
           <div>
             <span class="larger-time">{{gameTime | digitalClock}}</span>
           </div>
@@ -13,7 +16,7 @@
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-25-rem animated" v-for="(card, index) in cardList">
-              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}</span></div>
+              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}{{card.id}}</span></div>
             </div>
            </div>
       </Scroller>
@@ -60,7 +63,8 @@
           isNormal: true,
           timeHandler: null,
           prevSelected: null,
-          readyTimer: null
+          readyTimer: null,
+          currentObj: null
         };
       },
       components: {
@@ -89,9 +93,9 @@
         initListData () {
           let self = this;
           this.isNormal = (this.$route.name === 'normalModel');
-          let currentObj = this.isNormal ? normalObj : strangeObj;
-          this.modelName = currentObj.title;
-          this.gameTime = currentObj.time;
+          this.currentObj = this.isNormal ? normalObj : strangeObj;
+          this.modelName = this.currentObj.title;
+          this.gameTime = this.currentObj.time;
           let types = ['type1st', 'type2nd', 'type3rd', 'type4th', 'type5th'];
           let allTypes = [];
           if (!this.isNormal) {
@@ -156,7 +160,6 @@
             this.correctNum++;
             console.info('correctNum:' + this.correctNum);
             if (this.correctNum === totalPairs) {
-              this.gameTime = 0;
               this.gameOver(true);
             }
             return;
@@ -214,7 +217,8 @@
           let name = this.isNormal ? 'normalModel' : 'strangeModel';
           let startIndex = this.$route.params.startindex;
           let endIndex = this.$route.params.endindex;
-          this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0)}});
+          let time = this.currentObj.time - this.gameTime;
+          this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0), time: time}});
         }
       }
     }
@@ -230,10 +234,10 @@
     position: absolute;
     left: 0;
     right: 0;
-    height: 120px;
+    height: 130px;
   }
   .has-timer-bar{
-    top: 140px;
+    top: 160px;
   }
   .title {
     font-size: 1.4em;
