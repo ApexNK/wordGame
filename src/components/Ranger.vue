@@ -20,7 +20,8 @@
         return {
           val1: 0,
           val2: 0,
-          width: 0
+          width: 0,
+          dragMin: 0
         }
       },
       props: {
@@ -125,7 +126,7 @@
           content:'';
           position:absolute;
           width:0;
-          height: 0;  
+          height: 0;
           border:8px solid;
           color:transparent;
         }

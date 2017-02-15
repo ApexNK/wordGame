@@ -14,7 +14,7 @@
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-25-rem animated" v-for="(card, index) in cardList">
-              <div class="col-container" style="overflow:auto">{{card.keyword}}</div>
+              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}</span></div>
             </div>
            </div>
       </Scroller>
