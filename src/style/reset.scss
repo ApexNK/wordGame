@@ -2,8 +2,8 @@
 @font-face
 {
 	font-family: minion-pro;
-	src: url('/static/font/MinionPro.ttf')
-		,url('/static/font/MinionPro-Regular.otf'); 
+	src: url('/static/font/minion_pro.ttf');
+		// ,url('/static/font/minion_pro.ttf'); 
 }
 *{
   margin:0;
@@ -11,6 +11,6 @@
 }
 body {
   font-size: $baseFontSize;
-  font-family: sans-serif;
-  // font-family: minion-pro;
+  // font-family: sans-serif;
+  font-family: "minion-pro";
 }

@@ -6,10 +6,13 @@
         <h4 class="col text-center title">
             {{title}}
         </h4>
+        <button @click="share()">分享</button>
         <!--<a class="button"></a>-->
     </div>
 </template>
 <script>
+    import soshm from 'soshm';
+
     export default {
       props: {
         title: {
@@ -23,6 +26,14 @@
       methods: {
         backClick () {
           this.$router.go(-1);
+        },
+        share () {
+          soshm.popIn({
+            title: 'APEXSAT800高频单词',
+            url: 'http://101.37.18.217/apex/',
+            pic: 'http://101.37.18.217/apex/static/img/apexLogo.jpg',
+            sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq']
+          });
         }
       }
     }

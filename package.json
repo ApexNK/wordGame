@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "soshm": "^1.1.3",
     "vue": "^2.1.0",
     "vue-range-slider": "^0.2.4"
   },

@@ -316,10 +316,10 @@
           this.goToFinishPage(false);
         },
         goToFinishPage (isSuccessed) {
-          // let name = this.isNormal ? 'normalModel' : 'strangeModel';
-          // let startIndex = this.$route.params.startindex;
-          // let endIndex = this.$route.params.endindex;
-          // this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0)}});
+          let name = this.isNormal ? 'normalModel' : 'strangeModel';
+          let startIndex = this.$route.params.startindex;
+          let endIndex = this.$route.params.endindex;
+          this.$router.replace({name: 'finish', params: {startindex: startIndex, endindex: endIndex, modelname: name, state: (isSuccessed ? 1 : 0)}});
         }
       }
     }
