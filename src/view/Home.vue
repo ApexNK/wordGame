@@ -3,7 +3,7 @@
         <header-bar></header-bar>
         <div class="container has-header">
           <div style="margin: 20px auto; width: 300px; text-align: center">
-              APEX 800
+              Barron 800
           </div>
           <div style="margin: 40px auto; width: 85%; text-align: center">
               <Ranger style="width: 100%;" v-on:change="change" :min="1" :max="80" :startdefault='1' :enddefault='20'> </Ranger>
@@ -12,14 +12,18 @@
           <div class="row row-wrap no-padding">
             <div class="model">
               <div style="padding: 0px 10px; text-align: right">
-                  <button type="button" @click="goNormalModel()" class="fr">普通模式</button>
+                  <button type="button" @click="goNormalModel()" class="fr model-btn">普通模式</button>
               </div>
             </div>
             <div class="model">
               <div style="padding: 0px 10px">
-                  <button type="button" @click="goStrageModel()" class="fl">变态模式</button>
+                  <button type="button" @click="goStrageModel()" class="fl model-btn">变态模式</button>
               </div>
             </div>
+             <div style="margin: 20px;padding: 20px 10px;">
+              <p>普通模式：真的很普通...</p>
+              <p>变态模式：时间很宽裕，要利用好不同颜色的提示作用</p>
+             </div>
           </div>
         </div>
     </div>
@@ -81,5 +85,9 @@
     float: left;
     width: 50%;
     clear: both;
+  }
+  .model-btn {
+    width: 80px;
+    height: 30px;
   }
 </style>

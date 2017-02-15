@@ -7,50 +7,48 @@
     @include box-sizing();
     &.type1st {
       .col-container{
-        background: rgba(25, 255, 255, 0.35);
-        border:3px double rgba(25, 255, 255, 0.75);
+        background: rgba(247, 232, 254, 0.35);
+        border:2px solid rgba(247, 232, 254, 0.95);
         // color: #19ffff;
       }
     }
     &.type2nd {
       .col-container{
-        background: rgba(255, 25, 119, 0.35);
-        border:3px double rgba(255, 25, 119, 0.75);
+        background: rgba(197, 255, 255, 0.35);
+        border:2px solid rgba(197, 255, 255, 0.95);
         // color: #FF1977;
       }
     }
     &.type3rd {
       .col-container{
-        background: rgba(59, 228, 66, 0.35);
-        border:3px double rgba(59, 228, 66, 0.75);
-        //box-shadow: 0 0 2px rgba(58, 74, 255, 0.75) inset;
-        // color: #3BE442;
+        background: rgba(216, 255, 216, 0.35);
+        border:2px solid rgba(216, 255, 216, 0.95);
       }
     }
     &.type4th {
       .col-container{
-        border:3px double rgba(255,153,18, 0.75);
-        background: rgba(255,153,18, 0.35);
+        border:2px solid rgba(191,216,255, 0.95);
+        background: rgba(191,216,255, 0.35);
         // box-shadow: 0 0 2px rgba(193, 34, 255, 0.75) inset;
         // color:#ff9912;
       }
     }
     &.type5th {
       .col-container{
-        border:3px double rgba(220, 164, 187, 0.75);
-        background: rgba(220, 164, 187, 0.35);
+        border:2px solid rgba(255, 229, 196, 0.95);
+        background: rgba(255, 229, 196, 0.35);
         // color: #DCA4BB;
       }
     }
     &.chosen {
       .col-container{
-        border:3px solid rgba(58,10,245, 1);
+        border:2px solid rgba(58,10,245, 1);
         // color: #3A0AF5;
       }
     }
     &.errchosen {
       .col-container{
-        border:3px solid rgba(255,1,1,1);
+        border:2px solid rgba(255,1,1,1);
         // color: #ff0101;
       }
     }
@@ -63,8 +61,8 @@
       top:1px;
       bottom:1px;
       text-align: center;
-      background: rgba(220, 164, 187, 0.35);
-      border:3px double rgba(220, 164, 187, 0.75);
+      background: rgba(191,216,255, 0.35);
+      border:2px solid rgba(191,216,255, 0.95);
       // color: #DCA4BB;
       color: #0e0e0e;
       word-wrap: break-word;

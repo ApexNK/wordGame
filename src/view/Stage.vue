@@ -5,7 +5,6 @@
           <div>
             <span class="larger-time">{{gameTime | digitalClock}}</span>
           </div>
-
       </div>
       <Scroller class="container has-timer-bar" v-if="startGame">
           <div class="row row-wrap no-padding">
@@ -46,109 +45,6 @@
       time: 30
     };
     const totalPairs = 10;
-    let listData = [
-      {
-        'name': 'aberrant',
-        'lang': 'en',
-        'sequence': 0
-      },
-      {
-        'name': 'abrasive',
-        'lang': 'en',
-        'sequence': 1
-      },
-      {
-        'name': 'accolade',
-        'lang': 'en',
-        'sequence': 2
-      },
-      {
-        'name': 'acrimonious',
-        'lang': 'en',
-        'sequence': 3
-      },
-      {
-        'name': 'address',
-        'lang': 'en',
-        'sequence': 4
-      },
-      {
-        'name': 'aesthetic',
-        'lang': 'en',
-        'sequence': 5
-      },
-      {
-        'name': 'aggressor',
-        'lang': 'en',
-        'sequence': 6
-      },
-      {
-        'name': 'alienate',
-        'lang': 'en',
-        'sequence': 7
-      },
-      {
-        'name': 'amorphous',
-        'lang': 'en',
-        'sequence': 8
-      },
-      {
-        'name': 'ample',
-        'lang': 'en',
-        'sequence': 9
-      },
-      {
-        'name': '侵略者，攻击者',
-        'lang': 'zh',
-        'sequence': 6
-      },
-      {
-        'name': '充足的',
-        'lang': 'zh',
-        'sequence': 9
-      },
-      {
-        'name': '发表演说；处理',
-        'lang': 'zh',
-        'sequence': 4
-      },
-      {
-        'name': '尖刻的',
-        'lang': 'zh',
-        'sequence': 3
-      },
-      {
-        'name': '异常的，脱轨的',
-        'lang': 'zh',
-        'sequence': 0
-      },
-      {
-        'name': '无组织的，不定形的',
-        'lang': 'zh',
-        'sequence': 8
-      },
-      {
-        'name': '离间，使孤立',
-        'lang': 'zh',
-        'sequence': 7
-      },
-      {
-        'name': '粗糙的，磨损的',
-        'lang': 'zh',
-        'sequence': 1
-      },
-      {
-        'name': '艺术的，审美的',
-        'lang': 'zh',
-        'sequence': 5
-      },
-      {
-        'name': '荣誉',
-        'lang': 'zh',
-        'sequence': 2
-      }
-    ];
-
     export default {
       data () {
         return {
@@ -156,7 +52,7 @@
           time: 3,
           gameTime: 0,
           modelName: '',
-          wordList: listData,
+          wordList: [],
           cardList: [],
           startTime: new Date().getTime(),
           wastedTime: 0,
@@ -290,7 +186,6 @@
           }.bind(this), 1000);
         },
         gameOver (success) {
-          console.info('game over');
           clearInterval(this.timeHandler);
           this.timeHandler = null;
           success ? this.goToSuccessPage() : this.goToFailPage();
@@ -335,10 +230,10 @@
     position: absolute;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 120px;
   }
   .has-timer-bar{
-    top: 104px;
+    top: 140px;
   }
   .title {
     font-size: 1.4em;
@@ -362,8 +257,8 @@
     text-align: center;
   }
   .larger-time {
-    font-size: 45px;
-    font-weight: 700;
+    font-size: 65px;
+    font-weight: 800;
     color: #2f2f2f;
     display: block;
     width: 100%;
