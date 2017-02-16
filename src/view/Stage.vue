@@ -16,7 +16,7 @@
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-25-rem animated" v-for="(card, index) in cardList">
-              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}{{card.id}}</span></div>
+              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}</span></div>
             </div>
            </div>
       </Scroller>
@@ -41,11 +41,11 @@
     import Scroller from 'components/Scroller.vue';
     const normalObj = {
       title: '欢迎挑战《普通模式》',
-      time: 5
+      time: 45
     };
     const strangeObj = {
       title: '欢迎挑战《变态模式》',
-      time: 5
+      time: 30
     };
     const totalPairs = 10;
     export default {
