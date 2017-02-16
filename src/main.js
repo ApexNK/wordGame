@@ -35,3 +35,4 @@ new Vue({
     App
   }
 }).$mount('#app');
+// window.fullScreen = true;

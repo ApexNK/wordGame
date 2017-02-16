@@ -9,7 +9,7 @@
             <i class="" :class="{'icon-emo-happy': isSuccessed,'icon-emo-unhappy': !isSuccessed}"></i>
             {{title}}
           </div>
-          <div style="margin: 20px auto; width: 300px; text-align: left;">
+          <div ref="copyEle" @click="copy" style="margin: 20px auto; width: 300px; text-align: left;" contentReadOnly="true">
               本次游戏中，用时{{time}}秒，答错{{ErrorList.length}}单词
               <ul v-if="ErrorList.length > 0" style="margin: 20px 0px; list-style-type:none; width: 100%; text-align: left;" >
                 <li v-for="word in ErrorList">
@@ -68,6 +68,14 @@
         },
         goHomePage () {
           this.$router.replace({name: 'home'});
+        },
+        copy () {
+          let copyEle = this.$refs.copyEle;
+          copyEle.contentEditable = 'true';
+          document.execCommand('selectAll');
+          document.execCommand('copy');
+          copyEle.contentEditable = 'false';
+          window.alert('复制成功');
         }
       }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="ranger-box">
+    <div class="ranger-box" >
         <div class="progress-bar" :style="style"></div>
         <div :style="{left: style.left}" style="position:absolute;height:20px; width:20px;margin-top:-40px">
           <div class="bubble tip-bubble-bottom">{{vals.start}}</div>
@@ -43,6 +43,9 @@
         }
       },
       mounted () {
+        // document.body.addEventListener('touchstart', this.preventDefault);
+        // document.body.addEventListener('touchmove', this.preventDefault);
+        // document.body.addEventListener('touchend', this.preventDefault);
         this.width = this.$el.offsetWidth;
         this.dragMin = this.min / this.max * 100;
 
@@ -77,6 +80,9 @@
             start: self.vals.start,
             end: self.vals.end
           });
+        },
+        preventDefault (event) {
+          event.preventDefault();
         }
       }
     }
@@ -111,10 +117,10 @@
           background-color: #fff;
           box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
           -webkit-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-          cursor: pointer;
+          -webkit-transition: transform 0.2s ease-in;
           transition: transform 0.2s ease-in;
+          cursor: pointer;
           &.active{
             -webkit-transform: translate(-50%, -50%) scale(2);
             -ms-transform: translate(-50%, -50%) scale(2);
