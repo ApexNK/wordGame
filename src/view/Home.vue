@@ -12,12 +12,12 @@
           <div class="row row-wrap no-padding">
             <div class="model">
               <div style="padding: 0px 10px; text-align: right">
-                  <button type="button" @click="goNormalModel()" class="fr model-btn">普通模式</button>
+                  <button type="button" @click="goNormalModel()" class="fr model-btn"><i class="icon-heart"></i>普通模式</button>
               </div>
             </div>
             <div class="model">
               <div style="padding: 0px 10px">
-                  <button type="button" @click="goStrageModel()" class="fl model-btn">变态模式</button>
+                  <button type="button" @click="goStrageModel()" class="fl model-btn"><i class="icon-heart-broken"></i>变态模式</button>
               </div>
             </div>
              <div class="content base-color" style="margin: 20px;padding: 20px 10px;">

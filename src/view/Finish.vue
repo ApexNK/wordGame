@@ -21,12 +21,12 @@
           <div class="row row-wrap no-padding">
             <div class="model">
               <div style="padding: 0px 10px; text-align: right">
-                  <button type="button" @click="tryAgain()" class="fr model-btn">再来一次</button>
+                  <button type="button" @click="tryAgain()" class="fr model-btn"><i class="icon-angellist"></i>再来一次</button>
               </div>
             </div>
             <div class="model">
               <div style="padding: 0px 10px">
-                  <button type="button" @click="goHomePage()" class="fl model-btn">回到首页</button>
+                  <button type="button" @click="goHomePage()" class="fl model-btn"><i class="icon-home-outline"></i>回到首页</button>
               </div>
             </div>
           </div>
