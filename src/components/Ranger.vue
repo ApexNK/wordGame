@@ -45,6 +45,8 @@
       mounted () {
         this.width = this.$el.offsetWidth;
         this.dragMin = this.min / this.max * 100;
+
+        console.dir(this.$refs.pointer1);
       },
       computed: {
         style () {
@@ -80,10 +82,13 @@
     }
 </script>
 <style lang="scss" scoped>
+    
     .ranger-box{
-        display: inline-block;
+        display: block;
         position: relative;
+        margin: 0 auto;
         min-width: 150px;
+        width: 100%;
         height: 4px;
         border-radius: 2px;
         background: #e2e2e2;
@@ -109,18 +114,43 @@
           -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
           cursor: pointer;
+          transition: transform 0.2s ease-in;
+          &.active{
+            -webkit-transform: translate(-50%, -50%) scale(2);
+            -ms-transform: translate(-50%, -50%) scale(2);
+            transform: translate(-50%, -50%) scale(2);
+          }
+          &.add,&.dec {
+            position: absolute;
+            top: -10px;
+            font-size: 22px;
+            line-height: 20px;
+            width: 22px;
+            height: 22px;
+            transform: none;
+            text-align: center;
+          }
+          &.dec{
+            left: -30px;
+          }
+          &.add {
+            left: inherit;
+            right: -30px;
+          }
         }
         .bubble {
-          display:inline-block;
-          position:relative;
-          background-color:#21fb92;
-          width:20px;
-          height: 20px;
-          padding:2px;
-          color:#0c0c0c;
-          text-align:center;
-          border-width: 1px 1px 1px 1px;
-          border-radius:100%;
+              display: inline-block;
+              position: relative;
+              background-color: #21fb92;
+              width: 20px;
+              height: 20px;
+              padding: 2px;
+              color: #0d8249;
+              text-align: center;
+              border-width: 1px 1px 1px 1px;
+              border-radius: 100%;
+              font-size: 10px;
+              line-height: 22px;
         }
         .bubble:before {
           content:'';

@@ -6,7 +6,7 @@
               Barron 800
           </div>
           <div style="margin: 40px auto; width: 85%; text-align: center">
-              <Ranger style="width: 100%;" v-on:change="change" :min="1" :max="80" :startdefault='1' :enddefault='20'> </Ranger>
+              <Ranger  v-on:change="change" :min="1" :max="80" :startdefault='1' :enddefault='20'> </Ranger>
               <!--<range-slider  class="slider" min="1" :max="80" step="1" v-model="sliderValue"></range-slider>-->
           </div>
           <div class="row row-wrap no-padding">
