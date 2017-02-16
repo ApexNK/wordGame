@@ -6,7 +6,7 @@
         <h4 class="col text-center title">
             {{title}}
         </h4>
-        <a class="button" @click="share()">分享</div>
+        <a class="button" @click="share()"><i class="icon-share"></i></div>
         <!--<a class="button"></a>-->
     </div>
 </template>
