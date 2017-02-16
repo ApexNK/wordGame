@@ -2,11 +2,12 @@
     <div>
         <header-bar></header-bar>
         <div class="container has-header">
-          <div style="margin: 20px auto; width: 300px; text-align: center">
+          <div class="title text-center margin-top-far">
               APEXSAT800 高频单词 连连看
           </div>
           
-          <div style="margin: 20px auto; width: 100%; text-align: center" :class="{'success': isSuccessed,'fail': !isSuccessed}">
+          <div class="result" :class="{'success': isSuccessed,'fail': !isSuccessed}">
+            <i class="" :class="{'icon-emo-happy': isSuccessed,'icon-emo-unhappy': !isSuccessed}"></i>
             {{title}}
           </div>
           <div style="margin: 20px auto; width: 300px; text-align: left;">
@@ -74,6 +75,7 @@
 </script>
 <style lang="scss" scoped>
   @import '~STYLE/mixin.scss';
+  @import '~STYLE/common.scss';
   .slider { 
   /* overwrite slider styles */
     width: 80%;
@@ -92,5 +94,13 @@
   }
   .fail {
     color:#ff0000
+  }
+  .result {
+    margin: 20px auto;
+    text-align: center;
+  }
+  .result i {
+    font-size: 30px;
+    display: block;
   }
 </style>

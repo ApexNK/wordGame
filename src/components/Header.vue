@@ -3,9 +3,7 @@
         <!--<a class="button" @click="backClick">
             返回
         </a>-->
-        <h4 class="col text-center title">
-            {{title}}
-        </h4>
+        <h4 class="col text-center">{{title}}</h4>
         <a class="button" @click="share()"><i class="icon-share"></i></div>
         <!--<a class="button"></a>-->
     </div>
@@ -41,22 +39,20 @@
 <style  lang="scss" scoped>
     @import '~STYLE/flex.scss';
     @import '~STYLE/common.scss';
-    @import '~STYLE/mixin.scss';
     .header-bar {
         position: fixed;
         left: 0;
         right: 0;
         line-height: 44px;
-        @include setShadow();
+        background: #000;
+        color: #fff;
     }
-    .title {
-            line-height: 44px;
-        }
-    .button {
-            display: inline-block;
-            color: #ccc;
-            width: 60px;
-            text-align: center;
-            line-height: 44px;
-        }
+    .header-bar h4 {
+        font-size: 16px;
+        font-weight: normal;
+    }
+    .header-bar .button {
+        position: absolute;
+        right: 10px;
+    }
 </style>

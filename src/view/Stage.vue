@@ -41,11 +41,11 @@
     import Scroller from 'components/Scroller.vue';
     const normalObj = {
       title: '欢迎挑战《普通模式》',
-      time: 45
+      time: 5
     };
     const strangeObj = {
       title: '欢迎挑战《变态模式》',
-      time: 30
+      time: 5
     };
     const totalPairs = 10;
     export default {

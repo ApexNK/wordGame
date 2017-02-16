@@ -2,7 +2,7 @@
     <div>
         <header-bar></header-bar>
         <div class="container has-header">
-          <div style="margin: 20px auto; width: 300px; text-align: center">
+          <div class="title text-center margin-top-far">
               Barron 800
           </div>
           <div style="margin: 40px auto; width: 85%; text-align: center">
@@ -20,7 +20,7 @@
                   <button type="button" @click="goStrageModel()" class="fl model-btn">变态模式</button>
               </div>
             </div>
-             <div style="margin: 20px;padding: 20px 10px;">
+             <div class="content base-color" style="margin: 20px;padding: 20px 10px;">
               <p>普通模式：真的很普通...</p>
               <p>变态模式：时间很宽裕，要利用好不同颜色的提示作用</p>
              </div>
@@ -76,6 +76,7 @@
 </script>
 <style lang="scss" scoped>
   @import '~STYLE/mixin.scss';
+  @import '~STYLE/common.scss';
   @import '~STYLE/components/NineGrid.scss';
   .slider {
   /* overwrite slider styles */
@@ -89,5 +90,12 @@
   .model-btn {
     width: 80px;
     height: 30px;
+    background: #fff;
+    border: 1px solid #333;
+    cursor: pointer;
+  }
+  .content {
+    line-height: 30px;
+    font-size: 16px;
   }
 </style>
