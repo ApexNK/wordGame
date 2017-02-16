@@ -4,8 +4,7 @@
             返回
         </a>-->
         <h4 class="col text-center">{{title}}</h4>
-        <a class="button" @click="share()"><i class="icon-share"></i></div>
-        <!--<a class="button"></a>-->
+        <a class="button" @click="share()"><i class="icon-share"></i></a>
     </div>
 </template>
 <script>

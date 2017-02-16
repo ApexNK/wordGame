@@ -2,10 +2,13 @@
     <div>
       <header-bar></header-bar>
       <div class="has-header timer-bar"  v-show="startGame">
-          <div style="width: 100%; text-align: center; margin-top:10px;">
-            APEXSAT800 高频单词 连连看
+          <div class="title text-center margin-top-far">
+              Barron 800
           </div>
-          <div>
+          <!--<div style="width: 100%; text-align: center; margin-top:10px;">
+              Barron 800
+          </div>-->
+          <div style="margin-top:-30px;">
             <span class="larger-time">{{gameTime | digitalClock}}</span>
           </div>
       </div>
@@ -16,7 +19,7 @@
               @click="cardClick(card.id, index)"
               :class="[{'rotateOut': card.isHidden, 'chosen': card.isChosen, 'errchosen': card.isError}, card.styleType]"
               class="col-25-rem animated" v-for="(card, index) in cardList">
-              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}{{card.id}}</span></div>
+              <div class="col-container" style="overflow:auto"><span>{{card.keyword}}</span></div>
             </div>
            </div>
       </Scroller>
@@ -41,11 +44,11 @@
     import Scroller from 'components/Scroller.vue';
     const normalObj = {
       title: '欢迎挑战《普通模式》',
-      time: 5
+      time: 45
     };
     const strangeObj = {
       title: '欢迎挑战《变态模式》',
-      time: 5
+      time: 30
     };
     const totalPairs = 10;
     export default {
@@ -237,7 +240,7 @@
     height: 130px;
   }
   .has-timer-bar{
-    top: 160px;
+    top: 180px;
   }
   .title {
     font-size: 1.4em;
