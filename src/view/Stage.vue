@@ -2,10 +2,13 @@
     <div>
       <header-bar></header-bar>
       <div class="has-header timer-bar"  v-show="startGame">
-          <div style="width: 100%; text-align: center; margin-top:10px;">
-            APEXSAT800 高频单词 连连看
+          <div class="title text-center margin-top-far">
+              Barron 800
           </div>
-          <div>
+          <!--<div style="width: 100%; text-align: center; margin-top:10px;">
+              Barron 800
+          </div>-->
+          <div style="margin-top:-30px;">
             <span class="larger-time">{{gameTime | digitalClock}}</span>
           </div>
       </div>
@@ -237,7 +240,7 @@
     height: 130px;
   }
   .has-timer-bar{
-    top: 160px;
+    top: 180px;
   }
   .title {
     font-size: 1.4em;

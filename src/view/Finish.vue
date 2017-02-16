@@ -3,9 +3,8 @@
         <header-bar></header-bar>
         <div class="container has-header">
           <div class="title text-center margin-top-far">
-              APEXSAT800 高频单词 连连看
+              Barron 800
           </div>
-          
           <div class="result" :class="{'success': isSuccessed,'fail': !isSuccessed}">
             <i class="" :class="{'icon-emo-happy': isSuccessed,'icon-emo-unhappy': !isSuccessed}"></i>
             {{title}}
