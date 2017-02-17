@@ -9,22 +9,24 @@
             <i class="" :class="{'icon-emo-happy': isSuccessed,'icon-emo-unhappy': !isSuccessed}"></i>
             {{title}}
           </div>
-          <div ref="copyEle" @click="copy" style="margin: 20px auto; width: 300px; text-align: left;" contentReadOnly="true">
+          <div style="margin: 20px auto; width: 300px; text-align: left;">
               本次游戏中，用时{{time}}秒，答错{{ErrorList.length}}单词
-              <ul v-if="ErrorList.length > 0" style="margin: 20px 0px; list-style-type:none; width: 100%; text-align: left;" >
-                <li v-for="word in ErrorList">
-                  {{word.enName}} : {{word.zhName}}
-                </li>
-              </ul>
+              <div v-if="ErrorList.length > 0"  ref="copyEle" @click="copy" contentReadOnly="true" >   
+                <ul style="margin: 20px 0px; list-style-type:none; width: 100%; text-align: left;" >
+                  <li v-for="word in ErrorList">
+                    {{word.enName}} : {{word.zhName}}
+                  </li>
+                </ul>
+              </div>
           </div>
           <div class="row row-wrap no-padding">
             <div class="model">
-              <div style="padding: 0px 10px; text-align: right">
+              <div style="padding: 0px 20px; text-align: right">
                   <button type="button" @click="tryAgain()" class="fr model-btn"><i class="icon-angellist"></i>再来一次</button>
               </div>
             </div>
             <div class="model">
-              <div style="padding: 0px 10px">
+              <div style="padding: 0px 20px">
                   <button type="button" @click="goHomePage()" class="fl model-btn"><i class="icon-home-outline"></i>回到首页</button>
               </div>
             </div>
@@ -93,8 +95,8 @@
     clear: both;
   }
   .model-btn {
-    width: 80px;
-    height: 30px;
+    width: 90px;
+    height: 32px;
   }
   .success {
     color: #00ff00

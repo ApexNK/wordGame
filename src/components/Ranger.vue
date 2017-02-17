@@ -95,12 +95,12 @@
         margin: 0 auto;
         min-width: 150px;
         width: 100%;
-        height: 4px;
+        height: 6px;
         border-radius: 2px;
         background: #e2e2e2;
         .progress-bar {
             position: absolute;
-            height: 4px;
+            height: 6px;
             border-radius: 2px;
             background: #21fb92;
         }

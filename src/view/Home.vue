@@ -5,18 +5,18 @@
           <div class="title text-center margin-top-far">
               Barron 800
           </div>
-          <div style="margin: 40px auto; width: 85%; text-align: center">
+          <div style="margin: 70px auto; width: 85%; text-align: center">
               <Ranger  v-on:change="change" :min="1" :max="80" :startdefault='1' :enddefault='20'> </Ranger>
               <!--<range-slider  class="slider" min="1" :max="80" step="1" v-model="sliderValue"></range-slider>-->
           </div>
           <div class="row row-wrap no-padding">
             <div class="model">
-              <div style="padding: 0px 10px; text-align: right">
+              <div style="padding: 0px 20px; text-align: right">
                   <button type="button" @click="goNormalModel()" class="fr model-btn"><i class="icon-heart"></i>普通模式</button>
               </div>
             </div>
             <div class="model">
-              <div style="padding: 0px 10px">
+              <div style="padding: 0px 20px">
                   <button type="button" @click="goStrageModel()" class="fl model-btn"><i class="icon-heart-broken"></i>变态模式</button>
               </div>
             </div>
@@ -88,8 +88,8 @@
     clear: both;
   }
   .model-btn {
-    width: 80px;
-    height: 30px;
+    width: 90px;
+    height: 32px;
     background: #fff;
     border: 1px solid #333;
     cursor: pointer;
